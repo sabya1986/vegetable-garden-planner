@@ -62,14 +62,15 @@ const vegetables = [
     sow: "Nursery transplant",
   },
   {
-    id: "bushbeans", name: "Bush Beans", emoji: "🫘", color: "#65a30d", bg: "#f7fee7",
-    zone: "E", row: "Lower-middle — fill gaps between plants", spacing: "4–6 in apart",
-    depth: "Direct sow 1 in deep", sunlight: "Full sun",
-    water: "1 in/week moderate", days: "50–55 days",
-    tips: "Direct sow seeds in any gaps between pepper/eggplant plants — no transplant needed. Fixes nitrogen in soil, benefiting all neighbors. Sow a second batch in 2 weeks for extended harvest.",
-    companions: "Cucumbers, eggplant, carrots", count: "~15 seeds in gaps",
-    height: "Short-medium (18–24 in)",
-    sow: "Direct seed — no nursery needed",
+    id: "cauliflower", name: "Cauliflower", emoji: "🥦", color: "#6366f1", bg: "#eef2ff",
+    zone: "E", row: "Lower-middle section", spacing: "18–24 in apart",
+    depth: "Same depth as nursery pot", sunlight: "Full sun (light afternoon shade welcome)",
+    water: "Consistent — 1–1.5 in/week, never let dry out", days: "55–70 days",
+    tips: "⚠️ May timing is late for spring cauliflower in Zone 6a — buy transplants NOW (not seeds) and get them in this week. Choose a fast heat-tolerant variety: 'Snow Crown' or 'Amazing'. When the head reaches golf-ball size, tie outer leaves over it to keep it white (blanching). If summer heat is brutal, treat this as a practice run — fall planting (transplant late August) will yield better. Keep well watered; stress causes buttoning (tiny premature heads).",
+    companions: "Dill, celery, nasturtiums — avoid planting near tomatoes or peppers",
+    count: "1–2 plants",
+    height: "Medium (2–2.5 ft)",
+    sow: "Nursery transplant only — too late for seeds",
   },
   {
     id: "carrots", name: "Carrots", emoji: "🥕", color: "#f97316", bg: "#fff7ed",
@@ -88,17 +89,17 @@ const vegetables = [
 const weekPlan = [
   { day: "Day 1–2", task: "Soil prep — full bed", detail: "Remove old straw/debris. Loosen 12\" deep — especially Zone F (south end) where carrots go, remove any rocks or clumps. Mix in 2–3\" compost throughout." },
   { day: "Day 3", task: "Build cucumber trellis + sow carrots", detail: "Tie twine horizontally across north-end metal stakes (3–4 rows at 8\" intervals). Then immediately direct sow carrot seeds in Zone F — they need the most germination time (10–14 days)." },
-  { day: "Day 4", task: "Sow bush beans", detail: "Direct sow bean seeds 1\" deep, 4–6\" apart in gap zones (Zone E). Water both bean and carrot zones well." },
+  { day: "Day 4", task: "Plant cauliflower transplant", detail: "Plant 1–2 cauliflower transplants in Zone E, 18–24\" apart. Water in deeply. Choose 'Snow Crown' or 'Amazing' variety — both handle late-spring heat better than standard varieties." },
   { day: "Day 5", task: "Plant north end transplants", detail: "Plant tomatoes deep (Zone A), tuck basil between them, then cucumber transplants at trellis base (Zone B)." },
   { day: "Day 6", task: "Plant middle sections", detail: "Plant eggplant (Zone C), then alternate chilli & bell pepper every 18\" (Zone D). Water all transplants deeply at base." },
   { day: "Day 7", task: "Mulch, fertilize & protect", detail: "Add 2–3\" straw mulch around all transplants (avoid mulching carrot & bean seed zones). Apply balanced 10-10-10 fertilizer. Check wire fence for ground-level gaps." },
 ];
 
 const harvestTimeline = [
-  { month: "Late June", crops: ["🌿 Basil", "🫘 Bush Beans"], color: "#65a30d" },
+  { month: "Late June", crops: ["🌿 Basil"], color: "#65a30d" },
   { month: "Early July", crops: ["🫛 Cucumbers"], color: "#0d9488" },
   { month: "Mid July", crops: ["🌶️ Chilli", "🫑 Bell Peppers", "🥕 Carrots"], color: "#ea580c" },
-  { month: "Late July", crops: ["🍅 Tomatoes", "🍆 Eggplant"], color: "#e8453c" },
+  { month: "Mid–Late July", crops: ["🍅 Tomatoes", "🍆 Eggplant", "🥦 Cauliflower"], color: "#e8453c" },
 ];
 
 export default function GardenPlanner() {
@@ -159,7 +160,7 @@ export default function GardenPlanner() {
               { id: "cucumbers", zone: "B", label: "🫛", sub: "Cucumber\n3 plants\n↑ Trellis", color: "#0d9488", bg: "#f0fdfa", flex: 1.2, tag: null },
               { id: "eggplant", zone: "C", label: "🍆", sub: "Eggplant\n2 plants", color: "#7c3aed", bg: "#f5f0ff", flex: 1.1, tag: null },
               { id: "chilli", zone: "D", label: "🌶️\n🫑", sub: "Chilli+Bell\n2+2 plants\nalternating", color: "#ea580c", bg: "#fff7ed", flex: 1.4, tag: null },
-              { id: "bushbeans", zone: "E", label: "🫘", sub: "Bush\nBeans\ngap rows", color: "#65a30d", bg: "#f7fee7", flex: 1, tag: null },
+              { id: "cauliflower", zone: "E", label: "🥦", sub: "Cauli-\nflower\n1–2 plants", color: "#6366f1", bg: "#eef2ff", flex: 1, tag: "Plant now!" },
               { id: "carrots", zone: "F", label: "🥕", sub: "Carrots\n~35 seeds\ndirect sow", color: "#f97316", bg: "#fff7ed", flex: 1.3, tag: "First fun!" },
             ].map((z) => (
               <div key={z.zone} onClick={() => setActive(z.id)} style={{
@@ -167,8 +168,8 @@ export default function GardenPlanner() {
                 borderRadius: 7, display: "flex", flexDirection: "column",
                 alignItems: "center", justifyContent: "center", cursor: "pointer",
                 padding: "4px 2px", transition: "all 0.15s",
-                transform: active === z.id || (z.id === "tomato" && active === "basil") || (z.id === "chilli" && active === "bellpepper") ? "scale(1.04)" : "scale(1)",
-                boxShadow: active === z.id || (z.id === "tomato" && active === "basil") || (z.id === "chilli" && active === "bellpepper") ? `0 0 0 2px ${z.color}` : "none",
+                transform: active === z.id || (z.id === "tomato" && active === "basil") || (z.id === "chilli" && active === "bellpepper") || (z.id === "cauliflower" && active === "cauliflower") ? "scale(1.04)" : "scale(1)",
+                boxShadow: active === z.id || (z.id === "tomato" && active === "basil") || (z.id === "chilli" && active === "bellpepper") || (z.id === "cauliflower" && active === "cauliflower") ? `0 0 0 2px ${z.color}` : "none",
               }}>
                 <div style={{ fontSize: 13, textAlign: "center", whiteSpace: "pre-line", lineHeight: 1.2 }}>{z.label}</div>
                 <div style={{ fontSize: 8, fontWeight: 700, color: z.color, marginTop: 2 }}>Zone {z.zone}</div>
@@ -192,6 +193,9 @@ export default function GardenPlanner() {
         </div>
         <div style={{ background: "#e0f2fe", border: "1px solid #bae6fd", borderRadius: 8, padding: "8px 12px", marginTop: 6, fontSize: 11, color: "#0c4a6e" }}>
           🔧 <strong>Cucumber trellis:</strong> Tie horizontal twine rows between your existing metal stakes along the north side — cucumbers climb up, saving horizontal space.
+        </div>
+        <div style={{ background: "#eef2ff", border: "1px solid #c7d2fe", borderRadius: 8, padding: "8px 12px", marginTop: 6, fontSize: 11, color: "#3730a3" }}>
+          🥦 <strong>Cauliflower alert:</strong> May is the last window for spring planting in Zone 6a. Get transplants in <em>this week</em> — not seeds. Pick 'Snow Crown' or 'Amazing' for heat tolerance. Blanch heads when golf-ball size.
         </div>
       </div>
 
@@ -270,13 +274,13 @@ export default function GardenPlanner() {
         </div>
         <div style={{ marginBottom: 12 }}>
           <div style={{ fontSize: 12, fontWeight: 700, color: "#1a3a1a", marginBottom: 6 }}>🏪 Nursery — Buy transplants:</div>
-          {["🍅 Tomatoes (3 plants)", "🌿 Basil (3 plants)", "🫛 Cucumbers (3 plants)", "🍆 Eggplant (2 plants)", "🌶️ Chilli Peppers (2 plants)", "🫑 Bell Peppers (2 plants)"].map((item, i) => (
+          {["🍅 Tomatoes (3 plants)", "🌿 Basil (3 plants)", "🫛 Cucumbers (3 plants)", "🍆 Eggplant (2 plants)", "🌶️ Chilli Peppers (2 plants)", "🫑 Bell Peppers (2 plants)", "🥦 Cauliflower (1–2 plants — 'Snow Crown' or 'Amazing' variety)"].map((item, i) => (
             <div key={i} style={{ fontSize: 12, color: "#444", padding: "3px 0", borderBottom: "1px solid #f0f0f0" }}>✓ {item}</div>
           ))}
         </div>
         <div>
           <div style={{ fontSize: 12, fontWeight: 700, color: "#1a3a1a", marginBottom: 6 }}>🌾 Hardware/Garden store — Buy seeds:</div>
-          {["🥕 Carrot seeds (Nantes or Danvers variety — good for IL clay-ish soil)", "🫘 Bush Bean seeds (Blue Lake or Provider variety)"].map((item, i) => (
+          {["🥕 Carrot seeds (Nantes or Danvers variety — good for IL clay-ish soil)"].map((item, i) => (
             <div key={i} style={{ fontSize: 12, color: "#444", padding: "3px 0", borderBottom: "1px solid #f0f0f0" }}>✓ {item}</div>
           ))}
         </div>
@@ -335,9 +339,10 @@ export default function GardenPlanner() {
           "✅ Zone 6a — longer warm season, great for peppers, eggplant & tomatoes",
           "☀️ Full southern sun in your backyard — best possible setup for all 8 crops",
           "🥕 Sow carrot seeds Day 1 — they need 10–14 days just to germinate",
-          "🫘 Bush beans are your fastest food crop — 50 days, direct sow now",
+          "🥦 Cauliflower timing is tight — buy transplants NOW & choose 'Snow Crown' or 'Amazing' variety for heat tolerance",
+          "🥦 Blanch cauliflower heads: tie outer leaves over the head when golf-ball size to keep it white",
           "🐰 Check wire fence for ground-level gaps before planting — rabbits love carrot tops!",
-          "☔ Raised beds drain well — don't overwater, especially beans & carrots",
+          "☔ Raised beds drain well — keep cauliflower consistently moist, stress causes buttoning",
           "👧 Carrots are a great toddler harvest activity — let them pull in mid-July!",
         ].map((tip, i) => (
           <div key={i} style={{ fontSize: 12, lineHeight: 1.8, color: "#d0ead0" }}>{tip}</div>
