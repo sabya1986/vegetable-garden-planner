@@ -62,17 +62,6 @@ const vegetables = [
     sow: "Nursery transplant",
   },
   {
-    id: "cauliflower", name: "Cauliflower", emoji: "🥦", color: "#6366f1", bg: "#eef2ff",
-    zone: "E", row: "Lower-middle section", spacing: "18–24 in apart",
-    depth: "Same depth as nursery pot", sunlight: "Full sun (light afternoon shade welcome)",
-    water: "Consistent — 1–1.5 in/week, never let dry out", days: "55–70 days",
-    tips: "⚠️ Seeds should have been started indoors in mid-February — it's too late for spring seeds now. Buy transplants only and get them in the ground this week (before June). Choose 'Snow Crown' or 'Amazing' — both handle heat better than standard types. In-ground clay soil: amend deeply with compost so roots don't sit in waterlogged soil. When head reaches golf-ball size, tie outer leaves over it to keep it white (blanching). Best long-term plan: start seeds indoors July 1 for a fall harvest — October cauliflower in Zone 6a is sweeter and more reliable than summer.",
-    companions: "Dill, celery, nasturtiums — avoid planting near tomatoes or peppers",
-    count: "1–2 plants",
-    height: "Medium (2–2.5 ft)",
-    sow: "Nursery transplant only — too late for seeds",
-  },
-  {
     id: "carrots", name: "Carrots", emoji: "🥕", color: "#f97316", bg: "#fff7ed",
     zone: "F", row: "South end (front of bed — full open sun)", spacing: "2–3 in apart, rows 6 in",
     depth: "Direct sow seeds 1/4 in deep — DO NOT transplant",
@@ -87,19 +76,20 @@ const vegetables = [
 ];
 
 const weekPlan = [
-  { day: "Day 1–2", task: "Soil prep — full bed", detail: "In-ground clay soil needs work — loosen 12\" deep throughout, especially Zone F (carrots). Remove rocks and clumps. Work in 3–4\" of compost to improve drainage and loosen texture. In-ground beds drain slower than raised beds so don't overwater after this week's rain." },
-  { day: "Day 3", task: "Build cucumber trellis + sow carrots", detail: "Tie twine horizontally across north-end metal stakes (3–4 rows at 8\" intervals). Then immediately direct sow carrot seeds in Zone F — they need the most germination time (10–14 days)." },
-  { day: "Day 4", task: "Plant cauliflower transplant", detail: "Plant 1–2 cauliflower transplants in Zone E, 18–24\" apart. Water in deeply. Choose 'Snow Crown' or 'Amazing' variety — both handle late-spring heat better than standard varieties." },
-  { day: "Day 5", task: "Plant north end transplants", detail: "Plant tomatoes deep (Zone A), tuck basil between them, then cucumber transplants at trellis base (Zone B)." },
-  { day: "Day 6", task: "Plant middle sections", detail: "Plant eggplant (Zone C), then alternate chilli & bell pepper every 18\" (Zone D). Water all transplants deeply at base." },
-  { day: "Day 7", task: "Mulch, fertilize & protect", detail: "Add 2–3\" straw mulch around all transplants (avoid mulching carrot & bean seed zones). Apply balanced 10-10-10 fertilizer. Check wire fence for ground-level gaps." },
+  { day: "Thu 5/21 AM", task: "Soil prep + build trellis", detail: "Loosen in-ground clay soil 12\" deep throughout. Work in 3–4\" compost — improves drainage and root penetration for all crops. Build cucumber trellis: tie horizontal twine across north-end metal stakes (3–4 rows at 8\" intervals). Bed will be nicely pre-moistened from this week's rain — no need to water soil before planting." },
+  { day: "Thu 5/21 AM", task: "Sow carrot seeds first", detail: "Before planting any transplants, direct sow carrot seeds in Zone F (south end). Every day counts — they take 10–14 days to germinate. Sow 1/4\" deep in rows 6\" apart, thinly. Keep soil consistently moist until sprouts appear." },
+  { day: "Thu 5/21 PM", task: "Plant north end transplants", detail: "Plant tomatoes deep in Zone A (bury 2/3 of stem for stronger root system). Tuck basil between the tomato plants. Set cucumber transplants at the trellis base in Zone B — they'll start climbing within days." },
+  { day: "Thu 5/21 PM", task: "Plant middle sections", detail: "Plant eggplant in Zone C (18–24\" apart). Then alternate chilli & bell pepper every 18\" through Zone D. Water all transplants slowly and deeply at the base — not overhead." },
+  { day: "Fri 5/22", task: "Mulch, fertilize & protect", detail: "Add 2–3\" straw mulch around all transplants — keep clear of stems, and skip the carrot seed zone (they need light to germinate). Apply balanced 10-10-10 fertilizer. Check fence for ground-level gaps — rabbits love fresh carrot sprouts." },
+  { day: "📅 Jul 1", task: "Start cauliflower seeds indoors 🥦", detail: "Start 'Snow Crown' or 'Amazing' cauliflower seeds indoors — ~6 weeks before a late-Aug transplant date. This gives you a fall harvest in October when cool temps produce sweeter, denser heads. Fall Zone 6a cauliflower is far more reliable than any summer planting." },
 ];
 
 const harvestTimeline = [
   { month: "Late June", crops: ["🌿 Basil"], color: "#65a30d" },
   { month: "Early July", crops: ["🫛 Cucumbers"], color: "#0d9488" },
   { month: "Mid July", crops: ["🌶️ Chilli", "🫑 Bell Peppers", "🥕 Carrots"], color: "#ea580c" },
-  { month: "Mid–Late July", crops: ["🍅 Tomatoes", "🍆 Eggplant", "🥦 Cauliflower"], color: "#e8453c" },
+  { month: "Late July", crops: ["🍅 Tomatoes", "🍆 Eggplant"], color: "#e8453c" },
+  { month: "🍂 October", crops: ["🥦 Cauliflower (fall crop — seeds start Jul 1)"], color: "#6366f1" },
 ];
 
 export default function GardenPlanner() {
@@ -125,7 +115,7 @@ export default function GardenPlanner() {
           🌱 Summer Garden Planner
         </h1>
         <div style={{ fontSize: 13, color: "#4a6a4a", marginTop: 4 }}>
-          8 Vegetables · In-Ground Bed ~4×14 ft · Full Southern Sun
+          7 Vegetables · In-Ground Bed ~4×14 ft · Planting Day Thu May 21
         </div>
       </div>
 
@@ -160,16 +150,17 @@ export default function GardenPlanner() {
               { id: "cucumbers", zone: "B", label: "🫛", sub: "Cucumber\n3 plants\n↑ Trellis", color: "#0d9488", bg: "#f0fdfa", flex: 1.2, tag: null },
               { id: "eggplant", zone: "C", label: "🍆", sub: "Eggplant\n2 plants", color: "#7c3aed", bg: "#f5f0ff", flex: 1.1, tag: null },
               { id: "chilli", zone: "D", label: "🌶️\n🫑", sub: "Chilli+Bell\n2+2 plants\nalternating", color: "#ea580c", bg: "#fff7ed", flex: 1.4, tag: null },
-              { id: "cauliflower", zone: "E", label: "🥦", sub: "Cauli-\nflower\n1–2 plants", color: "#6366f1", bg: "#eef2ff", flex: 1, tag: "Plant now!" },
+              { id: null, zone: "E", label: "🥦", sub: "Fall\nCauliflower\n(Oct harvest)", color: "#6366f1", bg: "#f5f3ff", flex: 1, tag: "Seeds Jul 1" },
               { id: "carrots", zone: "F", label: "🥕", sub: "Carrots\n~35 seeds\ndirect sow", color: "#f97316", bg: "#fff7ed", flex: 1.3, tag: "First fun!" },
             ].map((z) => (
-              <div key={z.zone} onClick={() => setActive(z.id)} style={{
+              <div key={z.zone} onClick={() => z.id && setActive(z.id)} style={{
                 flex: z.flex, background: z.bg, border: `2px solid ${z.color}`,
                 borderRadius: 7, display: "flex", flexDirection: "column",
-                alignItems: "center", justifyContent: "center", cursor: "pointer",
+                alignItems: "center", justifyContent: "center", cursor: z.id ? "pointer" : "default",
                 padding: "4px 2px", transition: "all 0.15s",
-                transform: active === z.id || (z.id === "tomato" && active === "basil") || (z.id === "chilli" && active === "bellpepper") || (z.id === "cauliflower" && active === "cauliflower") ? "scale(1.04)" : "scale(1)",
-                boxShadow: active === z.id || (z.id === "tomato" && active === "basil") || (z.id === "chilli" && active === "bellpepper") || (z.id === "cauliflower" && active === "cauliflower") ? `0 0 0 2px ${z.color}` : "none",
+                opacity: z.id ? 1 : 0.6,
+                transform: active === z.id || (z.id === "tomato" && active === "basil") || (z.id === "chilli" && active === "bellpepper") ? "scale(1.04)" : "scale(1)",
+                boxShadow: active === z.id || (z.id === "tomato" && active === "basil") || (z.id === "chilli" && active === "bellpepper") ? `0 0 0 2px ${z.color}` : "none",
               }}>
                 <div style={{ fontSize: 13, textAlign: "center", whiteSpace: "pre-line", lineHeight: 1.2 }}>{z.label}</div>
                 <div style={{ fontSize: 8, fontWeight: 700, color: z.color, marginTop: 2 }}>Zone {z.zone}</div>
@@ -189,13 +180,13 @@ export default function GardenPlanner() {
 
         {/* Carrot tip */}
         <div style={{ background: "#fff7ed", border: "1px solid #fed7aa", borderRadius: 8, padding: "8px 12px", marginTop: 10, fontSize: 11, color: "#9a3412" }}>
-          🥕 <strong>Carrot tip:</strong> Sow seeds as early as Day 3 — they take 10–14 days to germinate and need the head start. Loosen soil 12" deep and remove any stones first.
+          🥕 <strong>Carrot tip:</strong> Sow seeds first thing Thu May 21 AM — they take 10–14 days to germinate and every day counts. Loosen clay soil 12" deep and remove any stones before sowing.
         </div>
         <div style={{ background: "#e0f2fe", border: "1px solid #bae6fd", borderRadius: 8, padding: "8px 12px", marginTop: 6, fontSize: 11, color: "#0c4a6e" }}>
-          🔧 <strong>Cucumber trellis:</strong> Tie horizontal twine rows between your existing metal stakes along the north side — cucumbers climb up, saving horizontal space.
+          🔧 <strong>Cucumber trellis:</strong> Build before planting Thu morning — tie horizontal twine rows between your existing metal stakes along the north side. Cucumbers climb up, saving horizontal bed space.
         </div>
-        <div style={{ background: "#eef2ff", border: "1px solid #c7d2fe", borderRadius: 8, padding: "8px 12px", marginTop: 6, fontSize: 11, color: "#3730a3" }}>
-          🥦 <strong>Cauliflower alert:</strong> Seeds should have started indoors in Feb — it's too late for seeds now. Transplants only, in ground <em>this week</em>. Pick 'Snow Crown' or 'Amazing'. Or wait and start seeds July 1 for a fall harvest. Amend in-ground clay soil with compost first.
+        <div style={{ background: "#f5f3ff", border: "1px solid #c4b5fd", borderRadius: 8, padding: "8px 12px", marginTop: 6, fontSize: 11, color: "#4c1d95" }}>
+          🥦 <strong>Fall cauliflower plan:</strong> Start seeds indoors <strong>July 1</strong> → transplant late August → harvest October. Zone 6a fall cauliflower = sweeter, denser heads than any summer planting. Choose 'Snow Crown' or 'Amazing'.
         </div>
       </div>
 
@@ -270,19 +261,23 @@ export default function GardenPlanner() {
         boxShadow: "0 2px 16px rgba(0,80,0,0.07)", border: "1px solid #d4e8d4",
       }}>
         <div style={{ fontSize: 11, letterSpacing: 2, color: "#6b7c6b", textTransform: "uppercase", marginBottom: 12 }}>
-          🛒 What to Buy This Weekend
+          🛒 What to Buy — Before Thu May 21
         </div>
         <div style={{ marginBottom: 12 }}>
           <div style={{ fontSize: 12, fontWeight: 700, color: "#1a3a1a", marginBottom: 6 }}>🏪 Nursery — Buy transplants:</div>
-          {["🍅 Tomatoes (3 plants)", "🌿 Basil (3 plants)", "🫛 Cucumbers (3 plants)", "🍆 Eggplant (2 plants)", "🌶️ Chilli Peppers (2 plants)", "🫑 Bell Peppers (2 plants)", "🥦 Cauliflower (1–2 plants — 'Snow Crown' or 'Amazing' variety)"].map((item, i) => (
+          {["🍅 Tomatoes (3 plants)", "🌿 Basil (3 plants)", "🫛 Cucumbers (3 plants)", "🍆 Eggplant (2 plants)", "🌶️ Chilli Peppers (2 plants)", "🫑 Bell Peppers (2 plants)"].map((item, i) => (
             <div key={i} style={{ fontSize: 12, color: "#444", padding: "3px 0", borderBottom: "1px solid #f0f0f0" }}>✓ {item}</div>
           ))}
         </div>
-        <div>
+        <div style={{ marginBottom: 12 }}>
           <div style={{ fontSize: 12, fontWeight: 700, color: "#1a3a1a", marginBottom: 6 }}>🌾 Hardware/Garden store — Buy seeds:</div>
           {["🥕 Carrot seeds (Nantes or Danvers variety — good for IL clay-ish soil)"].map((item, i) => (
             <div key={i} style={{ fontSize: 12, color: "#444", padding: "3px 0", borderBottom: "1px solid #f0f0f0" }}>✓ {item}</div>
           ))}
+        </div>
+        <div style={{ background: "#f5f3ff", border: "1px solid #c4b5fd", borderRadius: 8, padding: "10px 12px" }}>
+          <div style={{ fontSize: 11, fontWeight: 700, color: "#4c1d95", marginBottom: 4 }}>📅 Buy later — Fall cauliflower (by Jul 1):</div>
+          <div style={{ fontSize: 12, color: "#444" }}>🥦 Cauliflower seeds — 'Snow Crown' or 'Amazing' variety (start indoors July 1, transplant late Aug, harvest October)</div>
         </div>
       </div>
 
@@ -311,7 +306,7 @@ export default function GardenPlanner() {
         boxShadow: "0 2px 16px rgba(0,80,0,0.07)", border: "1px solid #d4e8d4",
       }}>
         <div style={{ fontSize: 11, letterSpacing: 2, color: "#6b7c6b", textTransform: "uppercase", marginBottom: 12 }}>
-          🗓️ 7-Day Action Plan
+          🗓️ Planting Day Action Plan — Thu May 21
         </div>
         {weekPlan.map((item, i) => (
           <div key={i} style={{ display: "flex", gap: 10, alignItems: "flex-start", marginBottom: 10 }}>
@@ -337,13 +332,12 @@ export default function GardenPlanner() {
         </div>
         {[
           "✅ Zone 6a — longer warm season, great for peppers, eggplant & tomatoes",
-          "☀️ Full southern sun in your backyard — best possible setup for all 8 crops",
-          "🪱 In-ground bed: amend clay-heavy Palatine soil with 3–4\" compost before planting — improves drainage & root penetration for all crops",
-          "🥕 Sow carrot seeds Day 1 — they need 10–14 days just to germinate",
-          "🥦 Cauliflower timing is tight — buy transplants NOW & choose 'Snow Crown' or 'Amazing' variety for heat tolerance",
-          "🥦 Blanch cauliflower heads: tie outer leaves over the head when golf-ball size to keep it white",
-          "🐰 Check wire fence for ground-level gaps before planting — rabbits love carrot tops!",
-          "🌧️ In-ground clay soil drains slowly — let bed dry slightly between waterings, but keep cauliflower consistently moist; stress causes buttoning",
+          "☀️ Full southern sun in your backyard — best possible setup for all 7 summer crops",
+          "🪱 In-ground bed: amend clay-heavy Palatine soil with 3–4\" compost before planting — improves drainage & root penetration",
+          "🥕 Sow carrot seeds Thu 5/21 AM first — they need 10–14 days to germinate, every day counts",
+          "🌧️ In-ground clay soil drains slowly — bed is pre-soaked from this week's rain, so skip watering soil before planting",
+          "🐰 Check wire fence for ground-level gaps before Thu — rabbits love fresh carrot sprouts!",
+          "🥦 Fall cauliflower plan: start 'Snow Crown' seeds indoors July 1 → transplant late Aug → harvest October — far better than summer",
           "👧 Carrots are a great toddler harvest activity — let them pull in mid-July!",
         ].map((tip, i) => (
           <div key={i} style={{ fontSize: 12, lineHeight: 1.8, color: "#d0ead0" }}>{tip}</div>
