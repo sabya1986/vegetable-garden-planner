@@ -66,7 +66,7 @@ const vegetables = [
     zone: "E", row: "Lower-middle section", spacing: "18–24 in apart",
     depth: "Same depth as nursery pot", sunlight: "Full sun (light afternoon shade welcome)",
     water: "Consistent — 1–1.5 in/week, never let dry out", days: "55–70 days",
-    tips: "⚠️ May timing is late for spring cauliflower in Zone 6a — buy transplants NOW (not seeds) and get them in this week. Choose a fast heat-tolerant variety: 'Snow Crown' or 'Amazing'. When the head reaches golf-ball size, tie outer leaves over it to keep it white (blanching). If summer heat is brutal, treat this as a practice run — fall planting (transplant late August) will yield better. Keep well watered; stress causes buttoning (tiny premature heads).",
+    tips: "⚠️ Seeds should have been started indoors in mid-February — it's too late for spring seeds now. Buy transplants only and get them in the ground this week (before June). Choose 'Snow Crown' or 'Amazing' — both handle heat better than standard types. In-ground clay soil: amend deeply with compost so roots don't sit in waterlogged soil. When head reaches golf-ball size, tie outer leaves over it to keep it white (blanching). Best long-term plan: start seeds indoors July 1 for a fall harvest — October cauliflower in Zone 6a is sweeter and more reliable than summer.",
     companions: "Dill, celery, nasturtiums — avoid planting near tomatoes or peppers",
     count: "1–2 plants",
     height: "Medium (2–2.5 ft)",
@@ -78,7 +78,7 @@ const vegetables = [
     depth: "Direct sow seeds 1/4 in deep — DO NOT transplant",
     sunlight: "Full sun (tolerates light shade too)",
     water: "Keep consistently moist until germination, then moderate", days: "70–80 days",
-    tips: "Loosen soil 12\" deep and remove any rocks/clumps — carrots fork in compacted soil. Sow seeds thinly, then thin seedlings to 3\" apart once 2\" tall. Great activity for toddlers to help harvest! Plant a second round mid-June for fall carrots.",
+    tips: "In-ground Palatine soil is often clay-heavy — loosen 12\" deep and work in generous compost before sowing. Remove any rocks or clumps — carrots fork in compacted soil. Sow seeds thinly, then thin seedlings to 3\" apart once 2\" tall. Great activity for toddlers to help harvest! Plant a second round mid-June for fall carrots.",
     companions: "Tomatoes, beans, onions, rosemary",
     count: "~30–40 seeds (1 sq ft rows)",
     height: "Low (leafy tops ~12 in)",
@@ -87,7 +87,7 @@ const vegetables = [
 ];
 
 const weekPlan = [
-  { day: "Day 1–2", task: "Soil prep — full bed", detail: "Remove old straw/debris. Loosen 12\" deep — especially Zone F (south end) where carrots go, remove any rocks or clumps. Mix in 2–3\" compost throughout." },
+  { day: "Day 1–2", task: "Soil prep — full bed", detail: "In-ground clay soil needs work — loosen 12\" deep throughout, especially Zone F (carrots). Remove rocks and clumps. Work in 3–4\" of compost to improve drainage and loosen texture. In-ground beds drain slower than raised beds so don't overwater after this week's rain." },
   { day: "Day 3", task: "Build cucumber trellis + sow carrots", detail: "Tie twine horizontally across north-end metal stakes (3–4 rows at 8\" intervals). Then immediately direct sow carrot seeds in Zone F — they need the most germination time (10–14 days)." },
   { day: "Day 4", task: "Plant cauliflower transplant", detail: "Plant 1–2 cauliflower transplants in Zone E, 18–24\" apart. Water in deeply. Choose 'Snow Crown' or 'Amazing' variety — both handle late-spring heat better than standard varieties." },
   { day: "Day 5", task: "Plant north end transplants", detail: "Plant tomatoes deep (Zone A), tuck basil between them, then cucumber transplants at trellis base (Zone B)." },
@@ -125,7 +125,7 @@ export default function GardenPlanner() {
           🌱 Summer Garden Planner
         </h1>
         <div style={{ fontSize: 13, color: "#4a6a4a", marginTop: 4 }}>
-          8 Vegetables · Single Raised Bed ~4×14 ft · Full Southern Sun
+          8 Vegetables · In-Ground Bed ~4×14 ft · Full Southern Sun
         </div>
       </div>
 
@@ -145,7 +145,7 @@ export default function GardenPlanner() {
         marginBottom: 16, boxShadow: "0 2px 16px rgba(0,80,0,0.08)", border: "1px solid #d4e8d4",
       }}>
         <div style={{ fontSize: 11, letterSpacing: 2, color: "#6b7c6b", textTransform: "uppercase", marginBottom: 10 }}>
-          🏡 Raised Bed Layout — Top View (North → South)
+          🏡 In-Ground Bed Layout — Top View (North → South)
         </div>
 
         <div style={{ display: "flex", justifyContent: "space-between", fontSize: 10, color: "#888", marginBottom: 6, padding: "0 4px" }}>
@@ -195,7 +195,7 @@ export default function GardenPlanner() {
           🔧 <strong>Cucumber trellis:</strong> Tie horizontal twine rows between your existing metal stakes along the north side — cucumbers climb up, saving horizontal space.
         </div>
         <div style={{ background: "#eef2ff", border: "1px solid #c7d2fe", borderRadius: 8, padding: "8px 12px", marginTop: 6, fontSize: 11, color: "#3730a3" }}>
-          🥦 <strong>Cauliflower alert:</strong> May is the last window for spring planting in Zone 6a. Get transplants in <em>this week</em> — not seeds. Pick 'Snow Crown' or 'Amazing' for heat tolerance. Blanch heads when golf-ball size.
+          🥦 <strong>Cauliflower alert:</strong> Seeds should have started indoors in Feb — it's too late for seeds now. Transplants only, in ground <em>this week</em>. Pick 'Snow Crown' or 'Amazing'. Or wait and start seeds July 1 for a fall harvest. Amend in-ground clay soil with compost first.
         </div>
       </div>
 
@@ -338,11 +338,12 @@ export default function GardenPlanner() {
         {[
           "✅ Zone 6a — longer warm season, great for peppers, eggplant & tomatoes",
           "☀️ Full southern sun in your backyard — best possible setup for all 8 crops",
+          "🪱 In-ground bed: amend clay-heavy Palatine soil with 3–4\" compost before planting — improves drainage & root penetration for all crops",
           "🥕 Sow carrot seeds Day 1 — they need 10–14 days just to germinate",
           "🥦 Cauliflower timing is tight — buy transplants NOW & choose 'Snow Crown' or 'Amazing' variety for heat tolerance",
           "🥦 Blanch cauliflower heads: tie outer leaves over the head when golf-ball size to keep it white",
           "🐰 Check wire fence for ground-level gaps before planting — rabbits love carrot tops!",
-          "☔ Raised beds drain well — keep cauliflower consistently moist, stress causes buttoning",
+          "🌧️ In-ground clay soil drains slowly — let bed dry slightly between waterings, but keep cauliflower consistently moist; stress causes buttoning",
           "👧 Carrots are a great toddler harvest activity — let them pull in mid-July!",
         ].map((tip, i) => (
           <div key={i} style={{ fontSize: 12, lineHeight: 1.8, color: "#d0ead0" }}>{tip}</div>
@@ -350,7 +351,7 @@ export default function GardenPlanner() {
       </div>
 
       <div style={{ textAlign: "center", marginTop: 14, fontSize: 10, color: "#aaa" }}>
-        Final Garden Plan · Palatine, IL · Single Raised Bed · May 2026
+        Final Garden Plan · Palatine, IL · In-Ground Bed · May 2026
       </div>
     </div>
   );
