@@ -206,6 +206,180 @@ export default function GardenPlanner() {
         </div>
       </div>
 
+      {/* Detailed Planting Map */}
+      <div style={{
+        background: "#fff", borderRadius: 16, padding: "18px 14px",
+        marginBottom: 16, boxShadow: "0 2px 16px rgba(0,80,0,0.08)", border: "1px solid #d4e8d4",
+      }}>
+        <div style={{ fontSize: 11, letterSpacing: 2, color: "#6b7c6b", textTransform: "uppercase", marginBottom: 4 }}>
+          🗺️ Planting Map — Positions &amp; Spacing
+        </div>
+        <div style={{ fontSize: 10, color: "#888", marginBottom: 10 }}>
+          Top-down view · 4 ft wide × 14 ft long · all plants 6" from bed edges
+        </div>
+        <div style={{ fontSize: 10, fontWeight: 700, color: "#555", textAlign: "center", marginBottom: 6 }}>
+          🏠 NORTH — House side &nbsp;·&nbsp; ←&nbsp;4 ft wide&nbsp;→
+        </div>
+
+        <div style={{ border: "3px solid #8B6914", borderRadius: 8, overflow: "hidden" }}>
+          {[
+            {
+              id: "A", color: "#e8453c", bg: "#fff0ef", height: 90,
+              sublabel: "Tomato+Basil", depth: "~3 ft",
+              plants: [
+                { emoji: "🍅", x: 17, y: 8,  name: "T1" },
+                { emoji: "🍅", x: 50, y: 8,  name: "T2" },
+                { emoji: "🍅", x: 83, y: 8,  name: "T3" },
+                { emoji: "🌿", x: 8,  y: 52, name: "B1" },
+                { emoji: "🌿", x: 33, y: 52, name: "B2" },
+                { emoji: "🌿", x: 67, y: 52, name: "B3" },
+              ],
+              spacers: [
+                { x1: 17, x2: 50, y: 32, label: "~16\"" },
+                { x1: 50, x2: 83, y: 32, label: "~16\"" },
+                { x1: 8,  x2: 33, y: 74, label: "~10\"" },
+                { x1: 33, x2: 67, y: 74, label: "~10\"" },
+              ],
+            },
+            {
+              id: "B", color: "#0d9488", bg: "#f0fdfa", height: 64,
+              sublabel: "Cucumbers ↑", depth: "~2 ft",
+              trellis: true,
+              plants: [
+                { emoji: "🫛", x: 17, y: 26, name: "C1" },
+                { emoji: "🫛", x: 50, y: 26, name: "C2" },
+                { emoji: "🫛", x: 83, y: 26, name: "C3" },
+              ],
+              spacers: [
+                { x1: 17, x2: 50, y: 46, label: "~12\"" },
+                { x1: 50, x2: 83, y: 46, label: "~12\"" },
+              ],
+            },
+            {
+              id: "C", color: "#7c3aed", bg: "#f5f0ff", height: 60,
+              sublabel: "Eggplant", depth: "~2 ft",
+              plants: [
+                { emoji: "🍆", x: 25, y: 16, name: "E1" },
+                { emoji: "🍆", x: 75, y: 16, name: "E2" },
+              ],
+              spacers: [
+                { x1: 25, x2: 75, y: 36, label: "24\"" },
+              ],
+            },
+            {
+              id: "D", color: "#ea580c", bg: "#fff7ed", height: 66,
+              sublabel: "Chilli+Bell", depth: "~2.5 ft",
+              plants: [
+                { emoji: "🌶️", x: 13, y: 16, name: "Ch1" },
+                { emoji: "🫑", x: 38, y: 16, name: "Be1" },
+                { emoji: "🌶️", x: 63, y: 16, name: "Ch2" },
+                { emoji: "🫑", x: 88, y: 16, name: "Be2" },
+              ],
+              spacers: [
+                { x1: 13, x2: 38, y: 36, label: "~12\"" },
+                { x1: 38, x2: 63, y: 36, label: "~12\"" },
+                { x1: 63, x2: 88, y: 36, label: "~12\"" },
+              ],
+            },
+            {
+              id: "E", color: "#84cc16", bg: "#f7fee7", height: 56,
+              sublabel: "Okra (N edge)", depth: "~2 ft",
+              plants: [
+                { emoji: "🌾", x: 25, y: 12, name: "Ok1" },
+                { emoji: "🌾", x: 62, y: 12, name: "Ok2" },
+              ],
+              spacers: [
+                { x1: 25, x2: 62, y: 30, label: "~18\"" },
+              ],
+            },
+            {
+              id: "F", color: "#f97316", bg: "#fff7ed", height: 78,
+              sublabel: "Carrots (seed)", depth: "~2.5 ft",
+              isCarrots: true, plants: [], spacers: [],
+            },
+          ].map((zone, zi, arr) => (
+            <div key={zone.id} style={{
+              height: zone.height, background: zone.bg, position: "relative", display: "flex",
+              borderBottom: zi < arr.length - 1 ? `2px dashed ${zone.color}55` : "none",
+            }}>
+              {/* Colour sidebar with zone label */}
+              <div style={{
+                width: 34, minWidth: 34, background: zone.color,
+                display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 2,
+              }}>
+                <div style={{
+                  fontSize: 7.5, fontWeight: 700, color: "#fff",
+                  writingMode: "vertical-rl", transform: "rotate(180deg)",
+                  letterSpacing: 0.3, lineHeight: 1.3,
+                }}>{zone.sublabel}</div>
+                <div style={{ fontSize: 6.5, color: "rgba(255,255,255,0.75)", writingMode: "vertical-rl", transform: "rotate(180deg)" }}>{zone.depth}</div>
+              </div>
+
+              {/* Plant area */}
+              <div style={{ flex: 1, position: "relative" }}>
+                {zone.trellis && (
+                  <div style={{ position: "absolute", top: 7, left: "4%", right: "4%", borderTop: "2px solid #0d948866" }}>
+                    <div style={{ fontSize: 7, color: "#0d9488", background: "#f0fdfa", padding: "0 4px", margin: "-6px auto 0", width: "fit-content" }}>
+                      ══ trellis ══
+                    </div>
+                  </div>
+                )}
+
+                {zone.isCarrots ? (
+                  <div style={{ position: "absolute", inset: "6px 8px", display: "flex", flexDirection: "column", justifyContent: "space-around" }}>
+                    {[1,2,3,4,5].map(row => (
+                      <div key={row} style={{ display: "flex", alignItems: "center", gap: 1 }}>
+                        <div style={{ fontSize: 7, color: "#f97316", minWidth: 24, flexShrink: 0 }}>row {row}</div>
+                        <div style={{ flex: 1, display: "flex", gap: "calc((100% - 54px) / 17)", alignItems: "center" }}>
+                          {Array(18).fill(0).map((_, i) => (
+                            <div key={i} style={{ width: 3, height: 3, borderRadius: "50%", background: "#f9731699", flexShrink: 0 }} />
+                          ))}
+                        </div>
+                        {row === 1 && <div style={{ fontSize: 7, color: "#f97316", minWidth: 22, flexShrink: 0, textAlign: "right" }}>6"↕</div>}
+                      </div>
+                    ))}
+                    <div style={{ fontSize: 7.5, color: "#9a3412", textAlign: "center" }}>Seeds 1–2" apart · thin to 3" · rows 6" apart</div>
+                  </div>
+                ) : (
+                  <>
+                    {zone.plants.map((p, pi) => (
+                      <div key={pi} style={{
+                        position: "absolute", left: `${p.x}%`, top: p.y,
+                        transform: "translateX(-50%)", textAlign: "center",
+                      }}>
+                        <div style={{ fontSize: 15 }}>{p.emoji}</div>
+                        <div style={{ fontSize: 6.5, color: zone.color, fontWeight: 700, lineHeight: 1 }}>{p.name}</div>
+                      </div>
+                    ))}
+                    {zone.spacers.map((s, si) => (
+                      <div key={si} style={{
+                        position: "absolute", left: `${s.x1}%`,
+                        width: `${s.x2 - s.x1}%`, top: s.y,
+                        borderTop: `1px dashed ${zone.color}99`,
+                      }}>
+                        <div style={{
+                          position: "absolute", left: "50%", top: -7,
+                          transform: "translateX(-50%)",
+                          fontSize: 7, color: zone.color, background: zone.bg,
+                          padding: "0 2px", whiteSpace: "nowrap",
+                        }}>{s.label}</div>
+                      </div>
+                    ))}
+                  </>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div style={{ fontSize: 10, fontWeight: 700, color: "#555", textAlign: "center", marginTop: 6 }}>
+          ☀️ SOUTH — Open sky (maximum sun)
+        </div>
+        <div style={{ fontSize: 9, color: "#aaa", textAlign: "center", marginTop: 3 }}>
+          Spacing shown is centre-to-centre · 6" clearance from all bed edges
+        </div>
+      </div>
+
       {/* Veg selector */}
       <div style={{ fontSize: 11, letterSpacing: 2, color: "#6b7c6b", textTransform: "uppercase", marginBottom: 8 }}>
         📋 Plant Details
