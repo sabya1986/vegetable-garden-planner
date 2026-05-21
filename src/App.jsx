@@ -62,6 +62,19 @@ const vegetables = [
     sow: "Nursery transplant",
   },
   {
+    id: "okra", name: "Okra", emoji: "🌾", color: "#84cc16", bg: "#f7fee7",
+    zone: "E", row: "Zone E — north edge, beside peppers", spacing: "12–18 in apart",
+    depth: "Same depth as nursery pot — do NOT disturb roots",
+    sunlight: "Full sun — loves heat",
+    water: "1 in/week; once established, surprisingly drought-tolerant",
+    days: "50–65 days from transplant",
+    tips: "Plant at the north edge of Zone E (closest to Zone D peppers) so its 4–6 ft height doesn't shade the Zone F carrots to the south. Okra hates root disturbance — slide it out of the pot carefully, plant at exact pot depth, water in slowly and deeply. Harvest pods at 3–4 inches long — check every 2–3 days in peak summer. Pods left too long turn woody and tough fast. July and August heat will make this plant explode. Zone 6a summers are perfect for okra.",
+    companions: "Tomatoes, peppers, basil — all already in this bed",
+    count: "1–2 plants",
+    height: "Tall (4–6 ft)",
+    sow: "Nursery transplant — handle roots very gently",
+  },
+  {
     id: "carrots", name: "Carrots", emoji: "🥕", color: "#f97316", bg: "#fff7ed",
     zone: "F", row: "South end (front of bed — full open sun)", spacing: "2–3 in apart, rows 6 in",
     depth: "Direct sow seeds 1/4 in deep — DO NOT transplant",
@@ -79,7 +92,7 @@ const weekPlan = [
   { day: "Thu 5/21 AM", task: "Soil prep + build trellis", detail: "Loosen in-ground clay soil 12\" deep throughout. Work in 3–4\" compost — improves drainage and root penetration for all crops. Build cucumber trellis: tie horizontal twine across north-end metal stakes (3–4 rows at 8\" intervals). Bed will be nicely pre-moistened from this week's rain — no need to water soil before planting." },
   { day: "Thu 5/21 AM", task: "Sow carrot seeds first", detail: "Before planting any transplants, direct sow carrot seeds in Zone F (south end). Every day counts — they take 10–14 days to germinate. Sow 1/4\" deep in rows 6\" apart, thinly. Keep soil consistently moist until sprouts appear." },
   { day: "Thu 5/21 PM", task: "Plant north end transplants", detail: "Plant tomatoes deep in Zone A (bury 2/3 of stem for stronger root system). Tuck basil between the tomato plants. Set cucumber transplants at the trellis base in Zone B — they'll start climbing within days." },
-  { day: "Thu 5/21 PM", task: "Plant middle sections", detail: "Plant eggplant in Zone C (18–24\" apart). Then alternate chilli & bell pepper every 18\" through Zone D. Water all transplants slowly and deeply at the base — not overhead." },
+  { day: "Thu 5/21 PM", task: "Plant middle sections + okra", detail: "Plant eggplant in Zone C (18–24\" apart). Then alternate chilli & bell pepper every 18\" through Zone D. Plant okra at the north edge of Zone E — slide it out of the pot carefully, don't disturb the roots, plant at exact pot depth. Water all transplants slowly and deeply at base — not overhead." },
   { day: "Fri 5/22", task: "Mulch, fertilize & protect", detail: "Add 2–3\" straw mulch around all transplants — keep clear of stems, and skip the carrot seed zone (they need light to germinate). Apply balanced 10-10-10 fertilizer. Check fence for ground-level gaps — rabbits love fresh carrot sprouts." },
   { day: "📅 Jul 1", task: "Start cauliflower seeds indoors 🥦", detail: "Start 'Snow Crown' or 'Amazing' cauliflower seeds indoors — ~6 weeks before a late-Aug transplant date. This gives you a fall harvest in October when cool temps produce sweeter, denser heads. Fall Zone 6a cauliflower is far more reliable than any summer planting." },
 ];
@@ -89,6 +102,7 @@ const harvestTimeline = [
   { month: "Early July", crops: ["🫛 Cucumbers"], color: "#0d9488" },
   { month: "Mid July", crops: ["🌶️ Chilli", "🫑 Bell Peppers", "🥕 Carrots"], color: "#ea580c" },
   { month: "Late July", crops: ["🍅 Tomatoes", "🍆 Eggplant"], color: "#e8453c" },
+  { month: "July–Sept", crops: ["🌾 Okra (pick every 2–3 days!)"], color: "#84cc16" },
   { month: "🍂 October", crops: ["🥦 Cauliflower (fall crop — seeds start Jul 1)"], color: "#6366f1" },
 ];
 
@@ -115,7 +129,7 @@ export default function GardenPlanner() {
           🌱 Summer Garden Planner
         </h1>
         <div style={{ fontSize: 13, color: "#4a6a4a", marginTop: 4 }}>
-          7 Vegetables · In-Ground Bed ~4×14 ft · Planting Day Thu May 21
+          8 Vegetables · In-Ground Bed ~4×14 ft · Planting Day Thu May 21
         </div>
       </div>
 
@@ -150,15 +164,14 @@ export default function GardenPlanner() {
               { id: "cucumbers", zone: "B", label: "🫛", sub: "Cucumber\n3 plants\n↑ Trellis", color: "#0d9488", bg: "#f0fdfa", flex: 1.2, tag: null },
               { id: "eggplant", zone: "C", label: "🍆", sub: "Eggplant\n2 plants", color: "#7c3aed", bg: "#f5f0ff", flex: 1.1, tag: null },
               { id: "chilli", zone: "D", label: "🌶️\n🫑", sub: "Chilli+Bell\n2+2 plants\nalternating", color: "#ea580c", bg: "#fff7ed", flex: 1.4, tag: null },
-              { id: null, zone: "E", label: "🥦", sub: "Fall\nCauliflower\n(Oct harvest)", color: "#6366f1", bg: "#f5f3ff", flex: 1, tag: "Seeds Jul 1" },
+              { id: "okra", zone: "E", label: "🌾", sub: "Okra\n1–2 plants\nnorth edge", color: "#84cc16", bg: "#f7fee7", flex: 1, tag: "Plant today!" },
               { id: "carrots", zone: "F", label: "🥕", sub: "Carrots\n~35 seeds\ndirect sow", color: "#f97316", bg: "#fff7ed", flex: 1.3, tag: "First fun!" },
             ].map((z) => (
-              <div key={z.zone} onClick={() => z.id && setActive(z.id)} style={{
+              <div key={z.zone} onClick={() => setActive(z.id)} style={{
                 flex: z.flex, background: z.bg, border: `2px solid ${z.color}`,
                 borderRadius: 7, display: "flex", flexDirection: "column",
-                alignItems: "center", justifyContent: "center", cursor: z.id ? "pointer" : "default",
+                alignItems: "center", justifyContent: "center", cursor: "pointer",
                 padding: "4px 2px", transition: "all 0.15s",
-                opacity: z.id ? 1 : 0.6,
                 transform: active === z.id || (z.id === "tomato" && active === "basil") || (z.id === "chilli" && active === "bellpepper") ? "scale(1.04)" : "scale(1)",
                 boxShadow: active === z.id || (z.id === "tomato" && active === "basil") || (z.id === "chilli" && active === "bellpepper") ? `0 0 0 2px ${z.color}` : "none",
               }}>
@@ -185,8 +198,11 @@ export default function GardenPlanner() {
         <div style={{ background: "#e0f2fe", border: "1px solid #bae6fd", borderRadius: 8, padding: "8px 12px", marginTop: 6, fontSize: 11, color: "#0c4a6e" }}>
           🔧 <strong>Cucumber trellis:</strong> Build before planting Thu morning — tie horizontal twine rows between your existing metal stakes along the north side. Cucumbers climb up, saving horizontal bed space.
         </div>
+        <div style={{ background: "#f7fee7", border: "1px solid #bef264", borderRadius: 8, padding: "8px 12px", marginTop: 6, fontSize: 11, color: "#365314" }}>
+          🌾 <strong>Okra root tip:</strong> Okra hates root disturbance — slide carefully out of pot, plant at exact same depth, water in slowly. Place at <strong>north edge of Zone E</strong> (beside peppers) so its height doesn't shade Zone F carrots. Harvest pods at 3–4" — don't let them go woody!
+        </div>
         <div style={{ background: "#f5f3ff", border: "1px solid #c4b5fd", borderRadius: 8, padding: "8px 12px", marginTop: 6, fontSize: 11, color: "#4c1d95" }}>
-          🥦 <strong>Fall cauliflower plan:</strong> Start seeds indoors <strong>July 1</strong> → transplant late August → harvest October. Zone 6a fall cauliflower = sweeter, denser heads than any summer planting. Choose 'Snow Crown' or 'Amazing'.
+          🥦 <strong>Fall cauliflower plan:</strong> Start seeds indoors <strong>July 1</strong> → transplant late Aug → harvest October. Zone E south end or a new spot — decide in July. Choose 'Snow Crown' or 'Amazing'.
         </div>
       </div>
 
@@ -268,6 +284,7 @@ export default function GardenPlanner() {
           {["🍅 Tomatoes (3 plants)", "🌿 Basil (3 plants)", "🫛 Cucumbers (3 plants)", "🍆 Eggplant (2 plants)", "🌶️ Chilli Peppers (2 plants)", "🫑 Bell Peppers (2 plants)"].map((item, i) => (
             <div key={i} style={{ fontSize: 12, color: "#444", padding: "3px 0", borderBottom: "1px solid #f0f0f0" }}>✓ {item}</div>
           ))}
+          <div style={{ fontSize: 12, color: "#365314", padding: "3px 0", borderBottom: "1px solid #f0f0f0", fontWeight: 600 }}>✅ 🌾 Okra (1–2 plants — already purchased!)</div>
         </div>
         <div style={{ marginBottom: 12 }}>
           <div style={{ fontSize: 12, fontWeight: 700, color: "#1a3a1a", marginBottom: 6 }}>🌾 Hardware/Garden store — Buy seeds:</div>
@@ -332,12 +349,13 @@ export default function GardenPlanner() {
         </div>
         {[
           "✅ Zone 6a — longer warm season, great for peppers, eggplant & tomatoes",
-          "☀️ Full southern sun in your backyard — best possible setup for all 7 summer crops",
+          "☀️ Full southern sun in your backyard — best possible setup for all 8 crops",
           "🪱 In-ground bed: amend clay-heavy Palatine soil with 3–4\" compost before planting — improves drainage & root penetration",
           "🥕 Sow carrot seeds Thu 5/21 AM first — they need 10–14 days to germinate, every day counts",
           "🌧️ In-ground clay soil drains slowly — bed is pre-soaked from this week's rain, so skip watering soil before planting",
           "🐰 Check wire fence for ground-level gaps before Thu — rabbits love fresh carrot sprouts!",
-          "🥦 Fall cauliflower plan: start 'Snow Crown' seeds indoors July 1 → transplant late Aug → harvest October — far better than summer",
+          "🌾 Okra loves July/Aug heat — Zone 6a summers are perfect. Pick pods at 3–4\" every 2–3 days or they go woody fast",
+          "🥦 Fall cauliflower plan: start 'Snow Crown' seeds indoors July 1 → transplant late Aug → harvest October",
           "👧 Carrots are a great toddler harvest activity — let them pull in mid-July!",
         ].map((tip, i) => (
           <div key={i} style={{ fontSize: 12, lineHeight: 1.8, color: "#d0ead0" }}>{tip}</div>
