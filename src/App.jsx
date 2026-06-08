@@ -106,8 +106,84 @@ const harvestTimeline = [
   { month: "🍂 October", crops: ["🥦 Cauliflower (fall crop — seeds start Jul 1)"], color: "#6366f1" },
 ];
 
+const careGuide = [
+  {
+    id: "tomato", emoji: "🍅", name: "Tomatoes", color: "#e8453c", bg: "#fff0ef",
+    support: { needed: true, label: "Cage or 6 ft stake", note: "Install NOW before roots spread" },
+    water: "Deep soak 2–3×/week at base only — never overhead. ~1–2\" per week total. Let soil dry slightly between.",
+    fertilize: "Every 2 weeks: tomato fertilizer. Once flowers appear, switch to low-N / high P+K formula.",
+    prune: "Remove suckers every 5–7 days — shoots in the V between main stem and branch. Keep 1–2 main stems for bigger fruit.",
+    watch: "🐛 Hornworms (hand-pick) · 🍃 Early blight (remove yellowing lower leaves) · 🔴 Blossom-end rot (caused by uneven watering + calcium).",
+    now: "Install cages or drive 6 ft stakes immediately if not done. Begin weekly sucker checks.",
+  },
+  {
+    id: "basil", emoji: "🌿", name: "Basil", color: "#15803d", bg: "#f0fdf4",
+    support: { needed: false, label: "No support needed" },
+    water: "Water at base when top inch of soil is dry. Never overhead — causes leaf spots.",
+    fertilize: "Light balanced fertilizer once a month. Too much N = lush but less flavour.",
+    prune: "Pinch flower buds off the moment they appear — most critical task. Harvest by cutting just above a leaf pair to keep plant bushy.",
+    watch: "🐛 Aphids under leaves · Fusarium wilt (sudden collapse — remove plant, don't replant basil in same spot).",
+    now: "Check growing tips daily for flower buds. Harvest any long stems to trigger new side growth.",
+  },
+  {
+    id: "cucumbers", emoji: "🫛", name: "Cucumbers", color: "#0d9488", bg: "#f0fdfa",
+    support: { needed: true, label: "Trellis — already up ✓", note: "Train new vines weekly onto twine" },
+    water: "1\" per week consistently. Irregular watering = bitter cucumbers. Water at base.",
+    fertilize: "Every 2 weeks balanced fertilizer. Ease off nitrogen once vines are running.",
+    prune: "Guide new vine growth up the trellis weekly — tie loosely with soft twine. Pinch growing tip once it clears the top of the trellis.",
+    watch: "🔶 Cucumber beetles (yellow/black striped) · 🍃 Powdery mildew on leaf faces · Pick off any yellowing cucumbers immediately.",
+    now: "Vines should be reaching for the trellis — help them along. Look for first yellow flowers opening.",
+  },
+  {
+    id: "eggplant", emoji: "🍆", name: "Eggplant", color: "#7c3aed", bg: "#f5f0ff",
+    support: { needed: true, label: "Light stake when fruiting", note: "Prepare a stake by early July" },
+    water: "Deep consistent watering — 1–1.5\" per week. Mulch helps retain warmth and moisture.",
+    fertilize: "Every 2–3 weeks balanced. Add high-potassium boost when flowering begins.",
+    prune: "Remove dead or yellowing leaves. Thin to 2–3 main branches for fewer, larger fruits.",
+    watch: "🐛 Flea beetles (tiny shot-holes in leaves — very common on young eggplant) · 🕷 Spider mites in hot dry spells · Colorado potato beetle.",
+    now: "Ensure dark mulch is around the base — eggplant loves warm soil. Watch closely for flea beetle holes on leaves.",
+  },
+  {
+    id: "chilli", emoji: "🌶️", name: "Chilli Peppers", color: "#ea580c", bg: "#fff7ed",
+    support: { needed: true, label: "Light stake when fruit sets", note: "Add mid-July when pods are heavy" },
+    water: "Moderate — let top inch dry slightly between waterings. Mild drought stress increases capsaicin (heat level).",
+    fertilize: "Monthly balanced fertilizer. Excess nitrogen = big plants with few fruits.",
+    prune: "Pinch the very first flower bud off to build a stronger plant before heavy fruiting begins.",
+    watch: "🐛 Aphids clustering at growing tips · Bacterial spot (dark water-soaked spots on leaves) · Sunscald on fruit in intense heat.",
+    now: "Let plants establish fully — resist overwatering. Check leaf undersides for aphids.",
+  },
+  {
+    id: "bellpepper", emoji: "🫑", name: "Bell Peppers", color: "#ca8a04", bg: "#fefce8",
+    support: { needed: true, label: "Light stake when fruiting", note: "Add mid-July when peppers are heavy" },
+    water: "Consistent 1–1.5\" per week — the most important factor. Inconsistent moisture = blossom drop.",
+    fertilize: "Every 2–3 weeks balanced. Extra calcium (crushed eggshell or calcium spray) prevents blossom-end rot.",
+    prune: "Remove first 1–2 flower buds to let plant establish. Thin to 2–3 main branches if very bushy.",
+    watch: "⚠️ Blossom drop is normal when temp is above 90°F in July — plant will resume setting fruit in August. 🐛 Aphids + pepper maggots.",
+    now: "Keep watering very consistent. Remove first buds if they appear before plant is 12\"+ tall.",
+  },
+  {
+    id: "okra", emoji: "🌾", name: "Okra", color: "#84cc16", bg: "#f7fee7",
+    support: { needed: true, label: "Stake when 3+ ft tall", note: "Particularly after heavy rain / wind" },
+    water: "1\" per week — surprisingly drought-tolerant once established, but consistent water = more pods.",
+    fertilize: "Light feeding every 3–4 weeks. Excess nitrogen = very tall plant with few pods.",
+    prune: "Remove lower leaves once plant is 2+ ft tall — improves airflow and redirects energy to pods. Side-dress with compost at mid-season.",
+    watch: "⚠️ HARVEST URGENCY — pods become woody and inedible in just 2–3 days once they pass 3–4\". Check every single day once production starts. 🐛 Corn earworm · aphids.",
+    now: "Plant is still establishing and growing. Be patient — okra is slow to start but explosive once July heat arrives. Don't overwater yet.",
+  },
+  {
+    id: "carrots", emoji: "🥕", name: "Carrots", color: "#f97316", bg: "#fff7ed",
+    support: { needed: false, label: "No support needed" },
+    water: "Keep consistently moist until sprouts appear (~2 weeks). Once established, deep water 2×/week.",
+    fertilize: "Light feed once seedlings are 3\" tall. Avoid high nitrogen — causes forked roots. Phosphorus and potassium are better.",
+    prune: "Thinning is critical — once seedlings are 2\" tall, thin to 3\" apart. Crowded carrots = stunted forked roots. This should be happening now.",
+    watch: "🐰 Rabbit damage at soil level (check fence gaps) · 🪲 Carrot rust fly · Forking = compacted or rocky soil below surface.",
+    now: "Seeds should be germinating or just sprouted. Keep soil moist — don't let surface crust over. Thin to 3\" spacing ASAP once 2\" tall.",
+  },
+];
+
 export default function GardenPlanner() {
   const [active, setActive] = useState("tomato");
+  const [careActive, setCareActive] = useState("tomato");
   const selected = vegetables.find((v) => v.id === active);
 
   return (
@@ -444,6 +520,104 @@ export default function GardenPlanner() {
           </div>
         </div>
       )}
+
+      {/* After-Planting Care Guide */}
+      <div style={{
+        background: "#fff", borderRadius: 16, padding: 18, marginBottom: 18,
+        boxShadow: "0 2px 16px rgba(0,80,0,0.07)", border: "1px solid #d4e8d4",
+      }}>
+        <div style={{ fontSize: 11, letterSpacing: 2, color: "#6b7c6b", textTransform: "uppercase", marginBottom: 4 }}>
+          🌿 After-Planting Care Guide
+        </div>
+        <div style={{ fontSize: 11, color: "#4a6a4a", marginBottom: 14 }}>
+          Plants are in the ground — here's how to keep them thriving.
+        </div>
+
+        {/* Vertical support summary */}
+        <div style={{ background: "#fef9c3", border: "1px solid #fbbf24", borderRadius: 10, padding: "10px 12px", marginBottom: 14 }}>
+          <div style={{ fontSize: 11, fontWeight: 700, color: "#78350f", marginBottom: 6 }}>🏗️ Vertical Support Needed</div>
+          {careGuide.filter(p => p.support.needed).map((p, i) => (
+            <div key={i} style={{ display: "flex", alignItems: "flex-start", gap: 6, marginBottom: 4 }}>
+              <span style={{ fontSize: 13 }}>{p.emoji}</span>
+              <div>
+                <span style={{ fontSize: 11, fontWeight: 700, color: "#1a2e1a" }}>{p.name}</span>
+                <span style={{ fontSize: 11, color: "#555" }}> — {p.support.label}</span>
+                {p.support.note && <div style={{ fontSize: 10, color: "#ea580c" }}>⚠️ {p.support.note}</div>}
+              </div>
+            </div>
+          ))}
+          <div style={{ marginTop: 8, paddingTop: 8, borderTop: "1px solid #fde68a" }}>
+            <div style={{ fontSize: 11, fontWeight: 700, color: "#78350f", marginBottom: 4 }}>✅ Self-Supporting</div>
+            {careGuide.filter(p => !p.support.needed).map((p, i) => (
+              <span key={i} style={{ fontSize: 12, marginRight: 10 }}>{p.emoji} {p.name}</span>
+            ))}
+          </div>
+        </div>
+
+        {/* Plant selector for care details */}
+        <div style={{ fontSize: 10, color: "#888", marginBottom: 6 }}>Tap a plant for detailed care instructions:</div>
+        <div style={{ display: "flex", gap: 6, marginBottom: 12, overflowX: "auto", paddingBottom: 4 }}>
+          {careGuide.map((p) => (
+            <button key={p.id} onClick={() => setCareActive(p.id)} style={{
+              padding: "7px 12px", borderRadius: 999,
+              border: `2px solid ${p.color}`,
+              background: careActive === p.id ? p.color : p.bg,
+              color: careActive === p.id ? "#fff" : p.color,
+              fontWeight: 700, fontSize: 13, cursor: "pointer",
+              whiteSpace: "nowrap", transition: "all 0.15s", flexShrink: 0,
+            }}>{p.emoji}</button>
+          ))}
+        </div>
+
+        {/* Care detail card */}
+        {(() => {
+          const p = careGuide.find(c => c.id === careActive);
+          if (!p) return null;
+          return (
+            <div style={{ border: `2px solid ${p.color}33`, borderRadius: 14, overflow: "hidden" }}>
+              {/* Header */}
+              <div style={{ background: p.color, padding: "10px 14px", display: "flex", alignItems: "center", gap: 10 }}>
+                <span style={{ fontSize: 28 }}>{p.emoji}</span>
+                <div>
+                  <div style={{ fontSize: 16, fontWeight: 700, color: "#fff" }}>{p.name}</div>
+                  <div style={{ fontSize: 10, color: "rgba(255,255,255,0.85)" }}>
+                    {p.support.needed
+                      ? `🏗️ Needs support: ${p.support.label}`
+                      : "✅ Self-supporting — no staking needed"}
+                  </div>
+                </div>
+              </div>
+              {/* Now banner */}
+              <div style={{ background: "#fef3c7", borderBottom: `1px solid ${p.color}22`, padding: "8px 14px", display: "flex", gap: 8, alignItems: "flex-start" }}>
+                <span style={{ fontSize: 14 }}>📅</span>
+                <div>
+                  <div style={{ fontSize: 10, fontWeight: 700, color: "#92400e", marginBottom: 1 }}>DO THIS NOW (Week 2–3)</div>
+                  <div style={{ fontSize: 11, color: "#78350f", lineHeight: 1.5 }}>{p.now}</div>
+                </div>
+              </div>
+              {/* Care rows */}
+              {[
+                { icon: "💧", label: "Watering",    val: p.water },
+                { icon: "🌱", label: "Fertilizing", val: p.fertilize },
+                { icon: "✂️",  label: "Pruning",     val: p.prune },
+                { icon: "🐛", label: "Watch For",   val: p.watch },
+              ].map((row, i) => (
+                <div key={i} style={{
+                  display: "flex", gap: 10, padding: "9px 14px",
+                  borderBottom: i < 3 ? `1px solid ${p.color}22` : "none",
+                  background: i % 2 === 0 ? "#fff" : p.bg,
+                }}>
+                  <span style={{ fontSize: 16, minWidth: 22 }}>{row.icon}</span>
+                  <div>
+                    <div style={{ fontSize: 10, fontWeight: 700, color: p.color, marginBottom: 1 }}>{row.label}</div>
+                    <div style={{ fontSize: 11, color: "#333", lineHeight: 1.6 }}>{row.val}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          );
+        })()}
+      </div>
 
       {/* What to buy vs direct sow */}
       <div style={{
