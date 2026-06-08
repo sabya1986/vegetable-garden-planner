@@ -184,6 +184,7 @@ const careGuide = [
 export default function GardenPlanner() {
   const [active, setActive] = useState("tomato");
   const [careActive, setCareActive] = useState("tomato");
+  const [tab, setTab] = useState("planting");
   const selected = vegetables.find((v) => v.id === active);
 
   return (
@@ -208,6 +209,26 @@ export default function GardenPlanner() {
           8 Vegetables · In-Ground Bed ~4×14 ft · Planting Day Thu May 21
         </div>
       </div>
+
+      {/* Tab bar */}
+      <div style={{ display: "flex", marginBottom: 20, borderRadius: 12, overflow: "hidden", border: "2px solid #d4e8d4" }}>
+        {[
+          { id: "planting", label: "🌱 Planting Plan" },
+          { id: "care",     label: "🌿 After-Care" },
+        ].map((t, i) => (
+          <button key={t.id} onClick={() => setTab(t.id)} style={{
+            flex: 1, padding: "13px 8px",
+            background: tab === t.id ? "#2d6a2d" : "#f0f7f0",
+            color: tab === t.id ? "#fff" : "#4a6a4a",
+            border: "none",
+            borderRight: i === 0 ? "2px solid #d4e8d4" : "none",
+            fontSize: 13, fontWeight: 700,
+            cursor: "pointer", transition: "all 0.2s",
+          }}>{t.label}</button>
+        ))}
+      </div>
+
+      {tab === "planting" && <>
 
       {/* Sun callout */}
       <div style={{
@@ -521,104 +542,6 @@ export default function GardenPlanner() {
         </div>
       )}
 
-      {/* After-Planting Care Guide */}
-      <div style={{
-        background: "#fff", borderRadius: 16, padding: 18, marginBottom: 18,
-        boxShadow: "0 2px 16px rgba(0,80,0,0.07)", border: "1px solid #d4e8d4",
-      }}>
-        <div style={{ fontSize: 11, letterSpacing: 2, color: "#6b7c6b", textTransform: "uppercase", marginBottom: 4 }}>
-          🌿 After-Planting Care Guide
-        </div>
-        <div style={{ fontSize: 11, color: "#4a6a4a", marginBottom: 14 }}>
-          Plants are in the ground — here's how to keep them thriving.
-        </div>
-
-        {/* Vertical support summary */}
-        <div style={{ background: "#fef9c3", border: "1px solid #fbbf24", borderRadius: 10, padding: "10px 12px", marginBottom: 14 }}>
-          <div style={{ fontSize: 11, fontWeight: 700, color: "#78350f", marginBottom: 6 }}>🏗️ Vertical Support Needed</div>
-          {careGuide.filter(p => p.support.needed).map((p, i) => (
-            <div key={i} style={{ display: "flex", alignItems: "flex-start", gap: 6, marginBottom: 4 }}>
-              <span style={{ fontSize: 13 }}>{p.emoji}</span>
-              <div>
-                <span style={{ fontSize: 11, fontWeight: 700, color: "#1a2e1a" }}>{p.name}</span>
-                <span style={{ fontSize: 11, color: "#555" }}> — {p.support.label}</span>
-                {p.support.note && <div style={{ fontSize: 10, color: "#ea580c" }}>⚠️ {p.support.note}</div>}
-              </div>
-            </div>
-          ))}
-          <div style={{ marginTop: 8, paddingTop: 8, borderTop: "1px solid #fde68a" }}>
-            <div style={{ fontSize: 11, fontWeight: 700, color: "#78350f", marginBottom: 4 }}>✅ Self-Supporting</div>
-            {careGuide.filter(p => !p.support.needed).map((p, i) => (
-              <span key={i} style={{ fontSize: 12, marginRight: 10 }}>{p.emoji} {p.name}</span>
-            ))}
-          </div>
-        </div>
-
-        {/* Plant selector for care details */}
-        <div style={{ fontSize: 10, color: "#888", marginBottom: 6 }}>Tap a plant for detailed care instructions:</div>
-        <div style={{ display: "flex", gap: 6, marginBottom: 12, overflowX: "auto", paddingBottom: 4 }}>
-          {careGuide.map((p) => (
-            <button key={p.id} onClick={() => setCareActive(p.id)} style={{
-              padding: "7px 12px", borderRadius: 999,
-              border: `2px solid ${p.color}`,
-              background: careActive === p.id ? p.color : p.bg,
-              color: careActive === p.id ? "#fff" : p.color,
-              fontWeight: 700, fontSize: 13, cursor: "pointer",
-              whiteSpace: "nowrap", transition: "all 0.15s", flexShrink: 0,
-            }}>{p.emoji}</button>
-          ))}
-        </div>
-
-        {/* Care detail card */}
-        {(() => {
-          const p = careGuide.find(c => c.id === careActive);
-          if (!p) return null;
-          return (
-            <div style={{ border: `2px solid ${p.color}33`, borderRadius: 14, overflow: "hidden" }}>
-              {/* Header */}
-              <div style={{ background: p.color, padding: "10px 14px", display: "flex", alignItems: "center", gap: 10 }}>
-                <span style={{ fontSize: 28 }}>{p.emoji}</span>
-                <div>
-                  <div style={{ fontSize: 16, fontWeight: 700, color: "#fff" }}>{p.name}</div>
-                  <div style={{ fontSize: 10, color: "rgba(255,255,255,0.85)" }}>
-                    {p.support.needed
-                      ? `🏗️ Needs support: ${p.support.label}`
-                      : "✅ Self-supporting — no staking needed"}
-                  </div>
-                </div>
-              </div>
-              {/* Now banner */}
-              <div style={{ background: "#fef3c7", borderBottom: `1px solid ${p.color}22`, padding: "8px 14px", display: "flex", gap: 8, alignItems: "flex-start" }}>
-                <span style={{ fontSize: 14 }}>📅</span>
-                <div>
-                  <div style={{ fontSize: 10, fontWeight: 700, color: "#92400e", marginBottom: 1 }}>DO THIS NOW (Week 2–3)</div>
-                  <div style={{ fontSize: 11, color: "#78350f", lineHeight: 1.5 }}>{p.now}</div>
-                </div>
-              </div>
-              {/* Care rows */}
-              {[
-                { icon: "💧", label: "Watering",    val: p.water },
-                { icon: "🌱", label: "Fertilizing", val: p.fertilize },
-                { icon: "✂️",  label: "Pruning",     val: p.prune },
-                { icon: "🐛", label: "Watch For",   val: p.watch },
-              ].map((row, i) => (
-                <div key={i} style={{
-                  display: "flex", gap: 10, padding: "9px 14px",
-                  borderBottom: i < 3 ? `1px solid ${p.color}22` : "none",
-                  background: i % 2 === 0 ? "#fff" : p.bg,
-                }}>
-                  <span style={{ fontSize: 16, minWidth: 22 }}>{row.icon}</span>
-                  <div>
-                    <div style={{ fontSize: 10, fontWeight: 700, color: p.color, marginBottom: 1 }}>{row.label}</div>
-                    <div style={{ fontSize: 11, color: "#333", lineHeight: 1.6 }}>{row.val}</div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          );
-        })()}
-      </div>
-
       {/* What to buy vs direct sow */}
       <div style={{
         background: "#fff", borderRadius: 16, padding: 18, marginBottom: 18,
@@ -711,8 +634,139 @@ export default function GardenPlanner() {
       </div>
 
       <div style={{ textAlign: "center", marginTop: 14, fontSize: 10, color: "#aaa" }}>
-        Final Garden Plan · Palatine, IL · In-Ground Bed · May 2026
+        Garden Plan · Palatine, IL · In-Ground Bed · May 2026
       </div>
+
+      </>}
+
+      {tab === "care" && <>
+
+      {/* After-Planting Care Guide */}
+      <div style={{
+        background: "#fff", borderRadius: 16, padding: 18, marginBottom: 18,
+        boxShadow: "0 2px 16px rgba(0,80,0,0.07)", border: "1px solid #d4e8d4",
+      }}>
+        <div style={{ fontSize: 11, letterSpacing: 2, color: "#6b7c6b", textTransform: "uppercase", marginBottom: 4 }}>
+          🌿 After-Planting Care Guide
+        </div>
+        <div style={{ fontSize: 11, color: "#4a6a4a", marginBottom: 14 }}>
+          Plants are in the ground — here's how to keep them thriving.
+        </div>
+
+        {/* Vertical support summary */}
+        <div style={{ background: "#fef9c3", border: "1px solid #fbbf24", borderRadius: 10, padding: "10px 12px", marginBottom: 14 }}>
+          <div style={{ fontSize: 11, fontWeight: 700, color: "#78350f", marginBottom: 6 }}>🏗️ Vertical Support Needed</div>
+          {careGuide.filter(p => p.support.needed).map((p, i) => (
+            <div key={i} style={{ display: "flex", alignItems: "flex-start", gap: 6, marginBottom: 4 }}>
+              <span style={{ fontSize: 13 }}>{p.emoji}</span>
+              <div>
+                <span style={{ fontSize: 11, fontWeight: 700, color: "#1a2e1a" }}>{p.name}</span>
+                <span style={{ fontSize: 11, color: "#555" }}> — {p.support.label}</span>
+                {p.support.note && <div style={{ fontSize: 10, color: "#ea580c" }}>⚠️ {p.support.note}</div>}
+              </div>
+            </div>
+          ))}
+          <div style={{ marginTop: 8, paddingTop: 8, borderTop: "1px solid #fde68a" }}>
+            <div style={{ fontSize: 11, fontWeight: 700, color: "#78350f", marginBottom: 4 }}>✅ Self-Supporting</div>
+            {careGuide.filter(p => !p.support.needed).map((p, i) => (
+              <span key={i} style={{ fontSize: 12, marginRight: 10 }}>{p.emoji} {p.name}</span>
+            ))}
+          </div>
+        </div>
+
+        {/* Plant selector */}
+        <div style={{ fontSize: 10, color: "#888", marginBottom: 6 }}>Tap a plant for detailed care instructions:</div>
+        <div style={{ display: "flex", gap: 6, marginBottom: 12, overflowX: "auto", paddingBottom: 4 }}>
+          {careGuide.map((p) => (
+            <button key={p.id} onClick={() => setCareActive(p.id)} style={{
+              padding: "7px 12px", borderRadius: 999,
+              border: `2px solid ${p.color}`,
+              background: careActive === p.id ? p.color : p.bg,
+              color: careActive === p.id ? "#fff" : p.color,
+              fontWeight: 700, fontSize: 13, cursor: "pointer",
+              whiteSpace: "nowrap", transition: "all 0.15s", flexShrink: 0,
+            }}>{p.emoji}</button>
+          ))}
+        </div>
+
+        {/* Care detail card */}
+        {(() => {
+          const p = careGuide.find(c => c.id === careActive);
+          if (!p) return null;
+          return (
+            <div style={{ border: `2px solid ${p.color}33`, borderRadius: 14, overflow: "hidden" }}>
+              <div style={{ background: p.color, padding: "10px 14px", display: "flex", alignItems: "center", gap: 10 }}>
+                <span style={{ fontSize: 28 }}>{p.emoji}</span>
+                <div>
+                  <div style={{ fontSize: 16, fontWeight: 700, color: "#fff" }}>{p.name}</div>
+                  <div style={{ fontSize: 10, color: "rgba(255,255,255,0.85)" }}>
+                    {p.support.needed ? `🏗️ Needs support: ${p.support.label}` : "✅ Self-supporting — no staking needed"}
+                  </div>
+                </div>
+              </div>
+              <div style={{ background: "#fef3c7", borderBottom: `1px solid ${p.color}22`, padding: "8px 14px", display: "flex", gap: 8, alignItems: "flex-start" }}>
+                <span style={{ fontSize: 14 }}>📅</span>
+                <div>
+                  <div style={{ fontSize: 10, fontWeight: 700, color: "#92400e", marginBottom: 1 }}>DO THIS NOW (Week 2–3)</div>
+                  <div style={{ fontSize: 11, color: "#78350f", lineHeight: 1.5 }}>{p.now}</div>
+                </div>
+              </div>
+              {[
+                { icon: "💧", label: "Watering",    val: p.water },
+                { icon: "🌱", label: "Fertilizing", val: p.fertilize },
+                { icon: "✂️",  label: "Pruning",     val: p.prune },
+                { icon: "🐛", label: "Watch For",   val: p.watch },
+              ].map((row, i) => (
+                <div key={i} style={{
+                  display: "flex", gap: 10, padding: "9px 14px",
+                  borderBottom: i < 3 ? `1px solid ${p.color}22` : "none",
+                  background: i % 2 === 0 ? "#fff" : p.bg,
+                }}>
+                  <span style={{ fontSize: 16, minWidth: 22 }}>{row.icon}</span>
+                  <div>
+                    <div style={{ fontSize: 10, fontWeight: 700, color: p.color, marginBottom: 1 }}>{row.label}</div>
+                    <div style={{ fontSize: 11, color: "#333", lineHeight: 1.6 }}>{row.val}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          );
+        })()}
+      </div>
+
+      {/* Harvest timeline */}
+      <div style={{
+        background: "#fff", borderRadius: 16, padding: 18, marginBottom: 18,
+        boxShadow: "0 2px 16px rgba(0,80,0,0.07)", border: "1px solid #d4e8d4",
+      }}>
+        <div style={{ fontSize: 11, letterSpacing: 2, color: "#6b7c6b", textTransform: "uppercase", marginBottom: 12 }}>
+          📅 Harvest Timeline
+        </div>
+        {harvestTimeline.map((row, i) => (
+          <div key={i} style={{ display: "flex", gap: 12, alignItems: "center", marginBottom: 10 }}>
+            <div style={{
+              minWidth: 78, fontSize: 10, fontWeight: 700, color: "#fff",
+              background: row.color, borderRadius: 6, padding: "5px 6px", textAlign: "center", lineHeight: 1.4,
+            }}>{row.month}</div>
+            <div style={{ fontSize: 13, color: "#333" }}>{row.crops.join("  ·  ")}</div>
+          </div>
+        ))}
+      </div>
+
+      {/* Fall cauliflower reminder */}
+      <div style={{ background: "#f5f3ff", border: "1px solid #c4b5fd", borderRadius: 12, padding: "12px 14px", marginBottom: 18 }}>
+        <div style={{ fontSize: 11, fontWeight: 700, color: "#4c1d95", marginBottom: 4 }}>🥦 Don't forget — Fall Cauliflower</div>
+        <div style={{ fontSize: 11, color: "#5b21b6", lineHeight: 1.6 }}>
+          Start 'Snow Crown' or 'Amazing' seeds indoors <strong>July 1</strong> → transplant late August → harvest October.
+          Fall Zone 6a cauliflower produces sweeter, denser heads than any summer planting.
+        </div>
+      </div>
+
+      <div style={{ textAlign: "center", marginTop: 14, fontSize: 10, color: "#aaa" }}>
+        Garden Plan · Palatine, IL · In-Ground Bed · May 2026
+      </div>
+
+      </>}
     </div>
   );
 }
