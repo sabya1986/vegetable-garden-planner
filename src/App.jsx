@@ -185,6 +185,7 @@ export default function GardenPlanner() {
   const [active, setActive] = useState("tomato");
   const [careActive, setCareActive] = useState("tomato");
   const [tab, setTab] = useState("planting");
+  const [guideActive, setGuideActive] = useState("sucker");
   const selected = vegetables.find((v) => v.id === active);
 
   return (
@@ -640,6 +641,378 @@ export default function GardenPlanner() {
       </>}
 
       {tab === "care" && <>
+
+      {/* ── Visual Grow Guides ── */}
+      <div style={{
+        background: "#fff", borderRadius: 16, padding: 18, marginBottom: 18,
+        boxShadow: "0 2px 16px rgba(0,80,0,0.07)", border: "1px solid #d4e8d4",
+      }}>
+        <div style={{ fontSize: 11, letterSpacing: 2, color: "#6b7c6b", textTransform: "uppercase", marginBottom: 4 }}>
+          🎨 Visual Grow Guides
+        </div>
+        <div style={{ fontSize: 11, color: "#4a6a4a", marginBottom: 12 }}>
+          Illustrated reference for pruning, staking &amp; training your plants.
+        </div>
+
+        {/* Guide selector pills */}
+        <div style={{ display: "flex", gap: 6, overflowX: "auto", marginBottom: 16, paddingBottom: 4 }}>
+          {[
+            { id: "sucker",  label: "🍅 Tomato Sucker" },
+            { id: "caging",  label: "🏗️ Cage & Stake" },
+            { id: "trellis", label: "🥒 Trellis" },
+            { id: "pstake",  label: "🌶️ Light Stake" },
+          ].map(g => (
+            <button key={g.id} onClick={() => setGuideActive(g.id)} style={{
+              padding: "7px 14px", borderRadius: 999,
+              border: "2px solid #16a34a",
+              background: guideActive === g.id ? "#16a34a" : "#f0fdf4",
+              color: guideActive === g.id ? "#fff" : "#16a34a",
+              fontWeight: 700, fontSize: 12, cursor: "pointer",
+              whiteSpace: "nowrap", flexShrink: 0, transition: "all 0.15s",
+            }}>{g.label}</button>
+          ))}
+        </div>
+
+        {/* ── SUCKER DIAGRAM ── */}
+        {guideActive === "sucker" && (
+          <div>
+            <svg viewBox="0 0 300 230" style={{ width: "100%", display: "block", maxWidth: 340, margin: "0 auto" }}>
+              {/* Soil bed */}
+              <rect x="10" y="204" width="280" height="22" rx="3" fill="#c8a96e"/>
+              <line x1="10" y1="204" x2="290" y2="204" stroke="#92400e" strokeWidth="2"/>
+              <text x="150" y="221" textAnchor="middle" fontSize="9" fill="#92400e">soil level</text>
+
+              {/* Main stem — thick green vertical */}
+              <line x1="110" y1="204" x2="110" y2="10" stroke="#16a34a" strokeWidth="8" strokeLinecap="round"/>
+
+              {/* Upper junction + branch (healthy — shown for context) */}
+              <circle cx="110" cy="65" r="6" fill="#14532d" stroke="#fff" strokeWidth="1.5"/>
+              <line x1="110" y1="65" x2="32" y2="22" stroke="#16a34a" strokeWidth="3.5" strokeLinecap="round"/>
+              <ellipse cx="27" cy="18" rx="18" ry="8" fill="#4ade80" transform="rotate(28 27 18)"/>
+
+              {/* Lower junction — where the sucker grows */}
+              <circle cx="110" cy="128" r="8" fill="#14532d" stroke="#fff" strokeWidth="2"/>
+
+              {/* Leaf branch (keeps, goes upper-right) */}
+              <line x1="110" y1="128" x2="230" y2="56" stroke="#16a34a" strokeWidth="4.5" strokeLinecap="round"/>
+              <ellipse cx="235" cy="51" rx="23" ry="10" fill="#4ade80" transform="rotate(-30 235 51)"/>
+              <line x1="220" y1="58" x2="238" y2="47" stroke="#16a34a" strokeWidth="1.5"/>
+
+              {/* SUCKER — dashed red, grows from junction into the V */}
+              <line x1="110" y1="128" x2="174" y2="74" stroke="#dc2626" strokeWidth="4.5" strokeDasharray="8,4" strokeLinecap="round"/>
+              <circle cx="177" cy="71" r="7" fill="#dc2626"/>
+              {/* Tiny sucker leaves */}
+              <line x1="177" y1="71" x2="192" y2="55" stroke="#ef4444" strokeWidth="2.5" strokeLinecap="round"/>
+              <ellipse cx="196" cy="51" rx="12" ry="6" fill="#fca5a5" transform="rotate(-28 196 51)"/>
+
+              {/* V arc — highlights the "V" angle */}
+              <path d="M 110 98 A 32 32 0 0 1 134 120" fill="none" stroke="#f97316" strokeWidth="3" strokeDasharray="4,3"/>
+              <text x="140" y="106" fill="#f97316" fontSize="13" fontWeight="800">V</text>
+
+              {/* Label — Main Stem */}
+              <rect x="0" y="152" width="84" height="26" rx="4" fill="#f0fdf4" stroke="#16a34a" strokeWidth="1.5"/>
+              <text x="8" y="169" fill="#16a34a" fontSize="10" fontWeight="700">Main Stem ✓</text>
+              <line x1="84" y1="165" x2="104" y2="152" stroke="#16a34a" strokeWidth="1.2" strokeDasharray="3,2"/>
+
+              {/* Label — Leaf Branch */}
+              <rect x="158" y="16" width="102" height="26" rx="4" fill="#f0fdf4" stroke="#16a34a" strokeWidth="1.5"/>
+              <text x="164" y="33" fill="#16a34a" fontSize="10" fontWeight="700">Leaf Branch ✓</text>
+
+              {/* Label — Sucker */}
+              <rect x="174" y="92" width="120" height="54" rx="4" fill="#fff0ef" stroke="#dc2626" strokeWidth="2"/>
+              <text x="181" y="109" fill="#dc2626" fontSize="11" fontWeight="700">⚠ SUCKER</text>
+              <text x="181" y="123" fill="#dc2626" fontSize="9">Pinch off when &lt; 2"</text>
+              <text x="181" y="136" fill="#dc2626" fontSize="9">Check every 5–7 days</text>
+              <line x1="174" y1="108" x2="178" y2="80" stroke="#dc2626" strokeWidth="1.5" strokeDasharray="3,2"/>
+            </svg>
+
+            <div style={{ background: "#fff0ef", borderRadius: 10, padding: "10px 14px", marginTop: 8 }}>
+              <div style={{ fontSize: 11, fontWeight: 700, color: "#dc2626", marginBottom: 6 }}>
+                How to spot &amp; remove tomato suckers:
+              </div>
+              {[
+                "Find every node — the bump where a leaf branch meets the main stem",
+                "The sucker sprouts from the V (axil) right at that junction, growing between the upward stem and the branch",
+                "It mimics a whole new plant shoot — left alone it becomes a second main stem and robs energy from fruit",
+                "Snap it off with clean fingers when it's under 2\" — the cleanest method",
+                "Use sharp scissors for anything over 2\" so you don't tear the main stem bark",
+                "Re-check every 5–7 days in summer heat — suckers double in size fast",
+              ].map((t, i) => (
+                <div key={i} style={{ fontSize: 11, color: "#333", lineHeight: 1.75 }}>• {t}</div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* ── CAGE & STAKE DIAGRAM ── */}
+        {guideActive === "caging" && (
+          <div>
+            <svg viewBox="0 0 300 220" style={{ width: "100%", display: "block", maxWidth: 340, margin: "0 auto" }}>
+              {/* divider */}
+              <line x1="150" y1="18" x2="150" y2="204" stroke="#e5e7eb" strokeWidth="1.5" strokeDasharray="4,3"/>
+
+              {/* ── LEFT: WIRE CAGE ── */}
+              <text x="75" y="14" textAnchor="middle" fontSize="11" fontWeight="700" fill="#374151">Wire Cage</text>
+              <rect x="15" y="190" width="118" height="14" rx="2" fill="#c8a96e"/>
+              <line x1="15" y1="190" x2="133" y2="190" stroke="#92400e" strokeWidth="1.5"/>
+
+              {/* cage vertical wires */}
+              <line x1="28" y1="62" x2="28" y2="190" stroke="#6b7280" strokeWidth="2.5"/>
+              <line x1="122" y1="62" x2="122" y2="190" stroke="#6b7280" strokeWidth="2.5"/>
+              {/* back vertical wires (lighter) */}
+              <line x1="50" y1="54" x2="50" y2="190" stroke="#9ca3af" strokeWidth="1.5" strokeDasharray="5,3"/>
+              <line x1="100" y1="54" x2="100" y2="190" stroke="#9ca3af" strokeWidth="1.5" strokeDasharray="5,3"/>
+              {/* horizontal rings */}
+              <ellipse cx="75" cy="62"  rx="47" ry="9" fill="none" stroke="#6b7280" strokeWidth="2" strokeDasharray="5,3"/>
+              <ellipse cx="75" cy="97"  rx="47" ry="9" fill="none" stroke="#6b7280" strokeWidth="2"/>
+              <ellipse cx="75" cy="132" rx="47" ry="9" fill="none" stroke="#6b7280" strokeWidth="2"/>
+              <ellipse cx="75" cy="167" rx="47" ry="9" fill="none" stroke="#9ca3af" strokeWidth="1.5" strokeDasharray="5,3"/>
+              {/* cage legs driven into soil */}
+              <line x1="28" y1="190" x2="28" y2="202" stroke="#6b7280" strokeWidth="2.5"/>
+              <line x1="122" y1="190" x2="122" y2="202" stroke="#6b7280" strokeWidth="2.5"/>
+
+              {/* plant inside cage */}
+              <line x1="75" y1="190" x2="75" y2="30" stroke="#16a34a" strokeWidth="5" strokeLinecap="round"/>
+              <line x1="75" y1="105" x2="108" y2="76" stroke="#16a34a" strokeWidth="3"/>
+              <line x1="75" y1="105" x2="44" y2="78" stroke="#16a34a" strokeWidth="3"/>
+              <line x1="75" y1="145" x2="110" y2="119" stroke="#16a34a" strokeWidth="3"/>
+              <line x1="75" y1="145" x2="42" y2="121" stroke="#16a34a" strokeWidth="3"/>
+              <circle cx="114" cy="115" r="7" fill="#e8453c"/>
+              <circle cx="38" cy="118" r="7" fill="#e8453c"/>
+              <circle cx="112" cy="73" r="5" fill="#e8453c"/>
+
+              {/* cage label callout */}
+              <rect x="18" y="28" width="114" height="20" rx="3" fill="#f3f4f6" stroke="#9ca3af" strokeWidth="1"/>
+              <text x="75" y="41" textAnchor="middle" fill="#6b7280" fontSize="9">branches grow through rings</text>
+
+              {/* ── RIGHT: SINGLE STAKE ── */}
+              <text x="225" y="14" textAnchor="middle" fontSize="11" fontWeight="700" fill="#374151">Single Stake</text>
+              <rect x="162" y="190" width="130" height="14" rx="2" fill="#c8a96e"/>
+              <line x1="162" y1="190" x2="292" y2="190" stroke="#92400e" strokeWidth="1.5"/>
+
+              {/* wooden stake */}
+              <rect x="263" y="42" width="11" height="152" rx="3" fill="#92400e"/>
+              <polygon points="263,192 274,192 268.5,205" fill="#78350f"/>
+
+              {/* plant stem */}
+              <line x1="220" y1="190" x2="220" y2="28" stroke="#16a34a" strokeWidth="6" strokeLinecap="round"/>
+              <line x1="220" y1="108" x2="194" y2="78" stroke="#16a34a" strokeWidth="3"/>
+              <line x1="220" y1="108" x2="248" y2="80" stroke="#16a34a" strokeWidth="3"/>
+              <line x1="220" y1="152" x2="190" y2="126" stroke="#16a34a" strokeWidth="3"/>
+              <circle cx="186" cy="122" r="7" fill="#e8453c"/>
+              <circle cx="252" cy="77" r="6" fill="#e8453c"/>
+
+              {/* ties — figure-8 loops (3 of them) */}
+              {[82, 126, 166].map((y, i) => (
+                <g key={i}>
+                  <path d={`M 220 ${y} Q 235 ${y - 6} 248 ${y} Q 258 ${y + 5} 263 ${y}`}
+                    fill="none" stroke="#2563eb" strokeWidth="2.5" strokeLinecap="round"/>
+                  <circle cx="241" cy={y - 2} r="3.5" fill="#2563eb" opacity="0.7"/>
+                </g>
+              ))}
+
+              {/* tie label */}
+              <rect x="163" y="98" width="50" height="22" rx="3" fill="#eff6ff" stroke="#2563eb" strokeWidth="1.5"/>
+              <text x="169" y="111" fill="#2563eb" fontSize="9" fontWeight="700">soft tie</text>
+              <line x1="213" y1="109" x2="238" y2="106" stroke="#2563eb" strokeWidth="1" strokeDasharray="2,2"/>
+
+              {/* stake depth annotation */}
+              <line x1="280" y1="190" x2="290" y2="190" stroke="#6b7280" strokeWidth="1"/>
+              <line x1="280" y1="204" x2="290" y2="204" stroke="#6b7280" strokeWidth="1"/>
+              <line x1="285" y1="190" x2="285" y2="204" stroke="#6b7280" strokeWidth="1"/>
+              <text x="292" y="200" fontSize="8" fill="#6b7280">8"</text>
+            </svg>
+
+            <div style={{ background: "#f0f9ff", borderRadius: 10, padding: "10px 14px", marginTop: 8 }}>
+              <div style={{ fontSize: 11, fontWeight: 700, color: "#0369a1", marginBottom: 6 }}>
+                Cage vs Single Stake — when &amp; how:
+              </div>
+              {[
+                "🏗️ Wire cage (recommended): Slip over the seedling right at planting. Drive 3 legs 6–8\" into soil. Branches naturally push through the horizontal rings — no tying ever needed.",
+                "🪵 Single 6 ft stake: Drive it 8\" deep, 2\" away from the stem (never through the root ball). Tie the main stem loosely every 12\" as it grows using soft material.",
+                "Both: install early — once the plant is 2 ft tall it's hard to cage without snapping branches.",
+                "Never use wire or string pulled tight — it girdles the stem. Use cloth strips, foam twist-ties, or velcro, in a loose figure-8 loop.",
+              ].map((t, i) => (
+                <div key={i} style={{ fontSize: 11, color: "#333", lineHeight: 1.75, marginBottom: 2 }}>• {t}</div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* ── TRELLIS DIAGRAM ── */}
+        {guideActive === "trellis" && (
+          <div>
+            <svg viewBox="0 0 300 230" style={{ width: "100%", display: "block", maxWidth: 340, margin: "0 auto" }}>
+              {/* Soil */}
+              <rect x="10" y="200" width="280" height="22" rx="3" fill="#c8a96e"/>
+              <line x1="10" y1="200" x2="290" y2="200" stroke="#92400e" strokeWidth="2"/>
+              <text x="150" y="218" textAnchor="middle" fontSize="9" fill="#92400e">soil · posts driven 12" deep</text>
+
+              {/* Left post */}
+              <rect x="20" y="36" width="14" height="168" rx="3" fill="#92400e"/>
+              <polygon points="20,201 34,201 27,215" fill="#78350f"/>
+              <text x="27" y="28" textAnchor="middle" fontSize="9" fill="#92400e" fontWeight="700">Post</text>
+
+              {/* Right post */}
+              <rect x="266" y="36" width="14" height="168" rx="3" fill="#92400e"/>
+              <polygon points="266,201 280,201 273,215" fill="#78350f"/>
+              <text x="273" y="28" textAnchor="middle" fontSize="9" fill="#92400e" fontWeight="700">Post</text>
+
+              {/* Horizontal twine rows */}
+              {[64, 100, 136, 172].map((y, i) => (
+                <g key={i}>
+                  <line x1="34" y1={y} x2="266" y2={y} stroke="#a16207" strokeWidth="2.5" strokeLinecap="round"/>
+                  {/* height label on right */}
+                  <rect x="244" y={y - 9} width="34" height="16" rx="2" fill="#fef9c3"/>
+                  <text x="261" y={y + 4} textAnchor="middle" fontSize="8" fill="#92400e" fontWeight="700">
+                    {["12\"", "24\"", "36\"", "48\""][i]}
+                  </text>
+                </g>
+              ))}
+
+              {/* Vine 1 — growing up from base ~x=90 */}
+              <line x1="90" y1="200" x2="90" y2="96" stroke="#16a34a" strokeWidth="4" strokeLinecap="round"/>
+              <path d="M 90 96 Q 112 82 104 64" fill="none" stroke="#16a34a" strokeWidth="3" strokeLinecap="round"/>
+              {/* Cucumber fruits */}
+              <ellipse cx="74" cy="152" rx="8" ry="17" fill="#86efac" transform="rotate(18 74 152)"/>
+              <ellipse cx="106" cy="114" rx="7" ry="15" fill="#86efac" transform="rotate(-12 106 114)"/>
+              {/* Tendrils hooking to twine */}
+              <path d="M 90 172 Q 80 164 76 172 Q 72 180 82 177" fill="none" stroke="#22c55e" strokeWidth="2" strokeLinecap="round"/>
+              <path d="M 90 136 Q 102 127 106 136 Q 110 145 100 141" fill="none" stroke="#22c55e" strokeWidth="2" strokeLinecap="round"/>
+
+              {/* Vine 2 — ~x=190 */}
+              <line x1="190" y1="200" x2="190" y2="132" stroke="#16a34a" strokeWidth="4" strokeLinecap="round"/>
+              <path d="M 190 132 Q 210 116 202 100" fill="none" stroke="#16a34a" strokeWidth="3" strokeLinecap="round"/>
+              <ellipse cx="174" cy="160" rx="7" ry="15" fill="#86efac" transform="rotate(15 174 160)"/>
+              <path d="M 190 172 Q 180 163 176 172 Q 172 181 182 177" fill="none" stroke="#22c55e" strokeWidth="2" strokeLinecap="round"/>
+
+              {/* Span label at top */}
+              <line x1="34" y1="22" x2="266" y2="22" stroke="#9ca3af" strokeWidth="1" strokeDasharray="3,2"/>
+              <line x1="34" y1="18" x2="34" y2="26" stroke="#9ca3af" strokeWidth="1"/>
+              <line x1="266" y1="18" x2="266" y2="26" stroke="#9ca3af" strokeWidth="1"/>
+              <rect x="106" y="14" width="88" height="16" rx="3" fill="#f0fdf4"/>
+              <text x="150" y="25" textAnchor="middle" fontSize="9" fill="#16a34a" fontWeight="700">bed width ~4 ft</text>
+
+              {/* Tendril legend */}
+              <rect x="10" y="152" width="52" height="22" rx="3" fill="#f0fdf4" stroke="#22c55e" strokeWidth="1.5"/>
+              <text x="36" y="166" textAnchor="middle" fontSize="8" fill="#16a34a" fontWeight="700">tendril</text>
+            </svg>
+
+            <div style={{ background: "#f0fdfa", borderRadius: 10, padding: "10px 14px", marginTop: 8 }}>
+              <div style={{ fontSize: 11, fontWeight: 700, color: "#0f766e", marginBottom: 6 }}>
+                Setting up your cucumber trellis (Zone B):
+              </div>
+              {[
+                "Drive 2 sturdy posts (wood or metal) 12\" deep at each end of Zone B — they need to hold a lot of weight when fruiting",
+                "Run twine rows at 12\", 24\", 36\" and 48\" from soil — knot tightly around each post",
+                "As vines grow, guide the main vine upward — the curly tendrils will hook onto the twine naturally",
+                "Loosely tie any stray vines with a soft twist-tie if they wander off the strings",
+                "Cucumbers get heavy — check post stability mid-season and re-tension sagging twine",
+                "Harvest cucumbers regularly (every 2–3 days) so the vine doesn't snap under overloaded fruit",
+              ].map((t, i) => (
+                <div key={i} style={{ fontSize: 11, color: "#333", lineHeight: 1.75 }}>• {t}</div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* ── LIGHT STAKE DIAGRAM (Pepper / Eggplant / Okra) ── */}
+        {guideActive === "pstake" && (
+          <div>
+            <svg viewBox="0 0 300 225" style={{ width: "100%", display: "block", maxWidth: 340, margin: "0 auto" }}>
+              {/* Dividers */}
+              <line x1="100" y1="16" x2="100" y2="204" stroke="#e5e7eb" strokeWidth="1" strokeDasharray="3,2"/>
+              <line x1="200" y1="16" x2="200" y2="204" stroke="#e5e7eb" strokeWidth="1" strokeDasharray="3,2"/>
+
+              {/* ── CHILLI / BELL PEPPER ── */}
+              <text x="50" y="13" textAnchor="middle" fontSize="10" fontWeight="700" fill="#ea580c">Chilli/Bell</text>
+              <rect x="6"  y="192" width="92"  height="12" rx="2" fill="#c8a96e"/>
+              <line x1="6" y1="192" x2="98" y2="192" stroke="#92400e" strokeWidth="1.5"/>
+              <rect x="79" y="46" width="9" height="148" rx="2" fill="#92400e"/>
+              <polygon points="79,193 88,193 83.5,206" fill="#78350f"/>
+              <line x1="45" y1="192" x2="45" y2="36" stroke="#ea580c" strokeWidth="6" strokeLinecap="round"/>
+              <line x1="45" y1="108" x2="20" y2="76" stroke="#ea580c" strokeWidth="3"/>
+              <line x1="45" y1="108" x2="70" y2="78" stroke="#ea580c" strokeWidth="3"/>
+              <line x1="45" y1="152" x2="18" y2="124" stroke="#ea580c" strokeWidth="3"/>
+              <ellipse cx="15" cy="120" rx="6" ry="11" fill="#dc2626" transform="rotate(12 15 120)"/>
+              <ellipse cx="72" cy="75"  rx="5" ry="10" fill="#ea580c" transform="rotate(-8 72 75)"/>
+              <ellipse cx="17" cy="140" rx="5" ry="10" fill="#dc2626" transform="rotate(15 17 140)"/>
+              {[96, 146].map((y, i) => (
+                <g key={i}>
+                  <path d={`M 45 ${y} Q 58 ${y-5} 68 ${y} Q 74 ${y+4} 79 ${y}`} fill="none" stroke="#2563eb" strokeWidth="2.5" strokeLinecap="round"/>
+                  <circle cx="63" cy={y - 2} r="3" fill="#2563eb" opacity="0.75"/>
+                </g>
+              ))}
+
+              {/* ── EGGPLANT ── */}
+              <text x="150" y="13" textAnchor="middle" fontSize="10" fontWeight="700" fill="#7c3aed">Eggplant</text>
+              <rect x="104" y="192" width="92" height="12" rx="2" fill="#c8a96e"/>
+              <line x1="104" y1="192" x2="196" y2="192" stroke="#92400e" strokeWidth="1.5"/>
+              <rect x="177" y="46" width="9" height="148" rx="2" fill="#92400e"/>
+              <polygon points="177,193 186,193 181.5,206" fill="#78350f"/>
+              <line x1="143" y1="192" x2="143" y2="36" stroke="#7c3aed" strokeWidth="6" strokeLinecap="round"/>
+              <line x1="143" y1="105" x2="118" y2="74" stroke="#7c3aed" strokeWidth="3"/>
+              <line x1="143" y1="105" x2="170" y2="76" stroke="#7c3aed" strokeWidth="3"/>
+              <line x1="143" y1="152" x2="116" y2="124" stroke="#7c3aed" strokeWidth="3"/>
+              <ellipse cx="113" cy="119" rx="8" ry="15" fill="#7c3aed" transform="rotate(8 113 119)"/>
+              <ellipse cx="173" cy="73"  rx="7" ry="14" fill="#6d28d9" transform="rotate(-5 173 73)"/>
+              {[96, 148].map((y, i) => (
+                <g key={i}>
+                  <path d={`M 143 ${y} Q 156 ${y-5} 166 ${y} Q 172 ${y+4} 177 ${y}`} fill="none" stroke="#2563eb" strokeWidth="2.5" strokeLinecap="round"/>
+                  <circle cx="160" cy={y - 2} r="3" fill="#2563eb" opacity="0.75"/>
+                </g>
+              ))}
+
+              {/* ── OKRA (taller) ── */}
+              <text x="250" y="13" textAnchor="middle" fontSize="10" fontWeight="700" fill="#65a30d">Okra</text>
+              <rect x="202" y="192" width="96" height="12" rx="2" fill="#c8a96e"/>
+              <line x1="202" y1="192" x2="298" y2="192" stroke="#92400e" strokeWidth="1.5"/>
+              <rect x="273" y="28" width="9" height="166" rx="2" fill="#92400e"/>
+              <polygon points="273,193 282,193 277.5,207" fill="#78350f"/>
+              {/* taller stem */}
+              <line x1="238" y1="192" x2="238" y2="18" stroke="#84cc16" strokeWidth="6" strokeLinecap="round"/>
+              <line x1="238" y1="88"  x2="214" y2="58" stroke="#84cc16" strokeWidth="3"/>
+              <line x1="238" y1="130" x2="261" y2="100" stroke="#84cc16" strokeWidth="3"/>
+              <line x1="238" y1="168" x2="214" y2="144" stroke="#84cc16" strokeWidth="3"/>
+              <ellipse cx="211" cy="55"  rx="4" ry="13" fill="#84cc16" transform="rotate(-15 211 55)"/>
+              <ellipse cx="263" cy="97"  rx="4" ry="12" fill="#65a30d" transform="rotate(10 263 97)"/>
+              <ellipse cx="210" cy="141" rx="4" ry="13" fill="#84cc16" transform="rotate(-8 210 141)"/>
+              {[74, 120, 165].map((y, i) => (
+                <g key={i}>
+                  <path d={`M 238 ${y} Q 251 ${y-5} 261 ${y} Q 268 ${y+4} 273 ${y}`} fill="none" stroke="#2563eb" strokeWidth="2.5" strokeLinecap="round"/>
+                  <circle cx="255" cy={y - 2} r="3" fill="#2563eb" opacity="0.75"/>
+                </g>
+              ))}
+              {/* height annotation */}
+              <line x1="286" y1="18"  x2="296" y2="18"  stroke="#9ca3af" strokeWidth="1"/>
+              <line x1="286" y1="192" x2="296" y2="192" stroke="#9ca3af" strokeWidth="1"/>
+              <line x1="291" y1="18"  x2="291" y2="192" stroke="#9ca3af" strokeWidth="1" strokeDasharray="3,2"/>
+              <text x="299" y="110" fontSize="8" fill="#9ca3af" transform="rotate(90 299 110)">4–6 ft</text>
+
+              {/* soil labels */}
+              {[50, 150, 250].map((x, i) => (
+                <text key={i} x={x} y="208" textAnchor="middle" fontSize="7.5" fill="#92400e">soil</text>
+              ))}
+            </svg>
+
+            <div style={{ background: "#f7fee7", borderRadius: 10, padding: "10px 14px", marginTop: 8 }}>
+              <div style={{ fontSize: 11, fontWeight: 700, color: "#365314", marginBottom: 6 }}>
+                Light staking for peppers, eggplant &amp; okra:
+              </div>
+              {[
+                "Drive a stake 8\" into the ground 2\" from the main stem — place it away from the root ball, not through it",
+                "Use soft ties: strips of cloth, foam twist-ties, or velcro. Never wire — it cuts through the stem",
+                "Tie in a loose figure-8: one loop around the stem, one around the stake — never cinch tight",
+                "Add a tie every 12\" as the plant grows taller — don't wait until it's already leaning hard",
+                "Peppers & eggplant: stake when fruit clusters start pulling the branches noticeably sideways",
+                "Okra: stake when it hits 3 ft+ tall — especially important before summer thunderstorms",
+              ].map((t, i) => (
+                <div key={i} style={{ fontSize: 11, color: "#333", lineHeight: 1.75 }}>• {t}</div>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
 
       {/* After-Planting Care Guide */}
       <div style={{
